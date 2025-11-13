@@ -1,0 +1,2 @@
+{"timestamp": "2025-11-12T08:34:17.235573Z", "endpoint": "/core/update", "module": "test", "status": "success", "latency_ms": 50, "pending_queue": 1}
+{"timestamp": "2025-11-12T08:34:39.667615Z", "endpoint": "/core/health", "status": "success", "uptime_s": 64.61182737350464, "pending_queue": 0, "error_count_24h": 0, "avg_latency_ms_24h": 50.0}

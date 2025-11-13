@@ -24,6 +24,12 @@ MOCK_MODULES = {
         "project_name": "Website Redesign",
         "status": "in_progress",
         "deadline": "2025-12-01T00:00:00Z"
+    },
+    "robotics": {
+        "robot_id": "RBT001",
+        "status": "operational",
+        "battery_level": 87.5,
+        "last_maintenance": "2025-10-10T09:15:00Z"
     }
 }
 

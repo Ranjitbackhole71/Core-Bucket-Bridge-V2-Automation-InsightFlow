@@ -1,0 +1,99 @@
+{
+  "jobs": [
+    {
+      "name": "startup_sync",
+      "trigger": {
+        "type": "onStartup"
+      },
+      "actions": [
+        {
+          "type": "send_core_update",
+          "data": {
+            "module": "education",
+            "data": {
+              "course_id": "CS101",
+              "course_name": "Introduction to Computer Science",
+              "students_enrolled": 150,
+              "instructor": "Dr. Smith"
+            }
+          }
+        },
+        {
+          "type": "get_bucket_status"
+        }
+      ]
+    },
+    {
+      "name": "periodic_finance_sync",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 30
+      },
+      "actions": [
+        {
+          "type": "send_core_update",
+          "data": {
+            "module": "finance",
+            "data": {
+              "account_id": "ACC123456",
+              "balance": 25000.75,
+              "currency": "USD",
+              "last_transaction": "2025-10-15T14:30:00Z"
+            }
+          }
+        },
+        {
+          "type": "get_bucket_status"
+        }
+      ]
+    },
+    {
+      "name": "periodic_creative_sync",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 45
+      },
+      "actions": [
+        {
+          "type": "send_core_update",
+          "data": {
+            "module": "creative",
+            "data": {
+              "project_id": "PRJ789",
+              "project_name": "Website Redesign",
+              "status": "in_progress",
+              "deadline": "2025-12-01T00:00:00Z"
+            }
+          }
+        },
+        {
+          "type": "get_bucket_status"
+        }
+      ]
+    },
+    {
+      "name": "periodic_robotics_sync",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 60
+      },
+      "actions": [
+        {
+          "type": "send_core_update",
+          "data": {
+            "module": "robotics",
+            "data": {
+              "robot_id": "RBT001",
+              "status": "operational",
+              "battery_level": 87.5,
+              "last_maintenance": "2025-10-10T09:15:00Z"
+            }
+          }
+        },
+        {
+          "type": "get_bucket_status"
+        }
+      ]
+    }
+  ]
+}

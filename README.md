@@ -1,15 +1,16 @@
 # Core–Bucket Data Bridge
 
-A complete backend + dashboard system that synchronizes module data from Core (local system) to Bucket (central API) with InsightFlow monitoring and N8N automation.
+A complete backend + dashboard system that synchronizes module data from Core (local system) to Bucket (central API) with InsightFlow monitoring and native Python automation.
 
 ## 🌟 Features
 
 - **FastAPI Backend**: RESTful API for data synchronization
 - **Streamlit Dashboard**: Real-time monitoring of sync activities
-- **N8N Automation**: Scheduled workflows for data synchronization
+- **Native Python Automation**: Scheduled workflows for data synchronization (replaces N8N)
 - **Comprehensive Logging**: Detailed logs for debugging and monitoring
 - **Full Test Coverage**: Pytest suite for API validation
 - **Modular Design**: Easily extensible and replaceable components
+- **Health Monitoring**: Real-time health metrics and status reporting
 
 ## 🏗️ System Architecture
 
@@ -32,8 +33,8 @@ A complete backend + dashboard system that synchronizes module data from Core (l
                             │
                             ▼
                    ┌────────────────────┐
-                   │     N8N Workflow   │
-                   │   (Automation)     │
+                   │  Python Automation │
+                   │     Runner         │
                    └────────────────────┘
 ```
 
@@ -41,19 +42,21 @@ A complete backend + dashboard system that synchronizes module data from Core (l
 
 ```
 ├─ core_bucket_bridge.py    # FastAPI backend application
-├─ mock_modules.py          # Mock modules for testing (education, finance, creative)
+├─ mock_modules.py          # Mock modules for testing (education, finance, creative, robotics)
 ├─ requirements.txt         # Python dependencies
 ├─ README.md                # This file
 ├─ handover_core_bridge.md  # Detailed documentation and setup guide
 ├─ logs/
-│   └─ core_sync.log        # Core synchronization logs
+│   ├─ core_sync.log        # Core synchronization logs
+│   └─ metrics.jsonl        # Health and performance metrics
 ├─ insight/
 │   ├─ flow.log             # InsightFlow monitoring logs
 │   └─ dashboard/
 │       └─ app.py           # Streamlit dashboard application
 ├─ automation/
-│   ├─ n8n_workflow.json    # N8N automation workflow
-│   └─ reports/             # Automation reports
+│   ├─ runner.py            # Native Python automation runner
+│   ├─ config.json          # Automation job configuration
+│   └─ reports/             # Automation reports and logs
 └─ .gitignore               # Git ignore file
 ```
 
@@ -71,9 +74,10 @@ pip install -r requirements.txt
 python core_bucket_bridge.py
 ```
 
-The server will start on `http://localhost:8000` with two endpoints:
+The server will start on `http://localhost:8000` with endpoints:
 - `POST /core/update` - Receives data from Core modules
 - `GET /bucket/status` - Returns current sync summary
+- `GET /core/health` - Returns health and performance metrics
 
 ### 3. Start the InsightFlow Dashboard
 
@@ -90,6 +94,19 @@ python mock_modules.py
 ```
 
 This will send sample data every 30 seconds to test the system.
+
+### 5. Run Automation Runner
+
+```bash
+# Run once
+python automation/runner.py --once
+
+# Run in watch mode (default 120-minute intervals)
+python automation/runner.py --watch
+
+# Run in watch mode with custom interval (in minutes)
+python automation/runner.py --watch --interval 30
+```
 
 ## 🛠 API Endpoints
 
@@ -133,28 +150,53 @@ Returns current sync summary.
 }
 ```
 
+### GET /core/health
+
+Returns health metrics for the Core-Bucket bridge.
+
+**Response**:
+```json
+{
+  "status": "ok",
+  "uptime_s": 1234.56,
+  "last_sync_ts": "2025-10-16T10:20:00Z",
+  "pending_queue": 0,
+  "error_count_24h": 0,
+  "avg_latency_ms_24h": 45.5
+}
+```
+
+**Curl example**:
+```bash
+curl http://localhost:8000/core/health
+```
+
 ## 📊 Dashboard Features
 
 The InsightFlow dashboard provides real-time monitoring of the synchronization process:
 
-- **Sync Events Table**: Shows all synchronization events
-- **Average Latency**: Displays average processing time
-- **Last Sync Time**: Shows the last synchronization time for each module
-- **Auto-refresh**: Updates automatically every 10 seconds
+- **Sync Success % (24h)**: Overall success rate of sync operations
+- **Avg Latency (24h)**: Average processing time for sync operations
+- **Error Count (24h)**: Number of errors in the last 24 hours
+- **Queue Depth**: Current number of pending sync operations
+- **Auto-refresh**: Updates automatically every 30 seconds
+- **Color-coded status**: 🟢 OK, 🔴 Error
 
-## ⚙️ N8N Automation
+## ⚙️ Native Python Automation
 
-The project includes an N8N workflow that:
+The project includes a native Python automation runner that replaces N8N:
 
-1. Runs every 2 hours
+1. Runs jobs based on configured triggers (startup, interval)
 2. Sends test data to the Core endpoint
 3. Retrieves Bucket status
 4. Saves results to `automation/reports/`
+5. Implements retry logic (3 attempts with exponential backoff)
 
-To use the workflow:
-1. Install N8N: `npm install n8n -g`
-2. Start N8N: `n8n`
-3. Import `automation/n8n_workflow.json` through the N8N UI
+Configuration is in `automation/config.json` with support for:
+- Startup triggers
+- Interval-based triggers
+- Multiple module data sending
+- Status checking actions
 
 ## 🧪 Testing
 
@@ -183,7 +225,7 @@ For a quick 2-3 minute demo:
 ## 🔧 Modular Design
 
 The system is designed to be modular:
-- N8N workflow can be replaced with LangGraph or other orchestration systems
+- Native Python automation can be extended or replaced
 - New Core modules can be easily added
 - API endpoints can be extended following the existing pattern
 
