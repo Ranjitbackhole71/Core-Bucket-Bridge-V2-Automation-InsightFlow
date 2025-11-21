@@ -13,6 +13,8 @@ from datetime import datetime
 import uuid
 import logging
 from logging.handlers import RotatingFileHandler
+import importlib.util
+import sys
 
 # Set up logging
 log_dir = "reports"
@@ -93,6 +95,49 @@ class AutomationRunner:
             logger.error(f"Error getting bucket status: {e}")
             return None
             
+    def load_plugin(self, plugin_name):
+        """Dynamically load a plugin"""
+        try:
+            plugin_path = os.path.join("automation", "plugins", f"{plugin_name}.py")
+            if not os.path.exists(plugin_path):
+                logger.error(f"Plugin {plugin_name} not found at {plugin_path}")
+                return None
+                
+            spec = importlib.util.spec_from_file_location(plugin_name, plugin_path)
+            module = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(module)
+            return module
+        except Exception as e:
+            logger.error(f"Error loading plugin {plugin_name}: {e}")
+            return None
+            
+    def execute_plugin(self, plugin_name):
+        """Execute a plugin and log results"""
+        plugin = self.load_plugin(plugin_name)
+        if not plugin:
+            return None
+            
+        try:
+            result = plugin.run()
+            logger.info(f"Plugin {plugin_name} executed successfully")
+            
+            # Log to engine log
+            log_entry = {
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "plugin": plugin_name,
+                "event": "plugin_executed",
+                "result": result
+            }
+            
+            engine_log_path = os.path.join(log_dir, "engine.log")
+            with open(engine_log_path, "a") as f:
+                f.write(json.dumps(log_entry) + "\n")
+                
+            return result
+        except Exception as e:
+            logger.error(f"Error executing plugin {plugin_name}: {e}")
+            return None
+            
     def execute_job(self, job):
         """Execute a single job"""
         job_name = job.get("name", "unnamed_job")
@@ -126,6 +171,14 @@ class AutomationRunner:
                 action_result["success"] = response is not None
                 action_result["details"] = response
                 results["actions"].append(action_result)
+                
+            elif action_type == "run_plugin":
+                plugin_name = action.get("plugin_name")
+                if plugin_name:
+                    response = self.execute_plugin(plugin_name)
+                    action_result["success"] = response is not None
+                    action_result["details"] = response
+                    results["actions"].append(action_result)
                 
         return results
         

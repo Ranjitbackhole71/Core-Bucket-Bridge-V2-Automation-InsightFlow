@@ -94,6 +94,45 @@
           "type": "get_bucket_status"
         }
       ]
+    },
+    {
+      "name": "heartbeat_job",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 5
+      },
+      "actions": [
+        {
+          "type": "run_plugin",
+          "plugin_name": "heartbeat"
+        }
+      ]
+    },
+    {
+      "name": "latency_probe_job",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 10
+      },
+      "actions": [
+        {
+          "type": "run_plugin",
+          "plugin_name": "latency_probe"
+        }
+      ]
+    },
+    {
+      "name": "sync_test_job",
+      "trigger": {
+        "type": "intervalMinutes",
+        "value": 15
+      },
+      "actions": [
+        {
+          "type": "run_plugin",
+          "plugin_name": "sync_test"
+        }
+      ]
     }
   ]
 }
