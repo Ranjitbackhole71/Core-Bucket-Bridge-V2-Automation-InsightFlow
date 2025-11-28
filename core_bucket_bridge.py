@@ -51,6 +51,11 @@ error_count_24h = 0
 pending_queue = 0
 latencies = []  # Store latencies for averaging
 
+# Security metrics tracking
+rejected_signatures = 0
+replay_attempts = 0
+last_valid_signature_timestamps = {}  # {plugin_id: timestamp}
+
 # In-memory storage for sync summary (in production, use a database)
 sync_summary = {
     "last_sync_time": None,
@@ -81,6 +86,12 @@ class CoreUpdatePayload(BaseModel):
     data: Dict[str, Any]
     session_id: Optional[str] = None
 
+class HeartbeatPayload(BaseModel):
+    module: str
+    timestamp: str
+    status: str
+    metrics: Optional[Dict[str, Any]] = None
+
 # Pydantic model for the response
 class CoreUpdateResponse(BaseModel):
     status: str
@@ -93,6 +104,11 @@ class BucketStatusResponse(BaseModel):
     total_sync_count: int
     module_sync_counts: Dict[str, int]
 
+class SecurityMetrics(BaseModel):
+    rejected_signatures: int
+    replay_attempts: int
+    last_valid_signature_timestamps: Dict[str, str]
+
 class HealthResponse(BaseModel):
     status: str
     uptime_s: float
@@ -100,30 +116,39 @@ class HealthResponse(BaseModel):
     pending_queue: int
     error_count_24h: int
     avg_latency_ms_24h: float
+    security: SecurityMetrics
 
 class RejectionResponse(BaseModel):
     status: str
     reason: str
 
-# JWT verification function
-def verify_jwt_token(authorization: str = Header(None)):
-    if not authorization:
-        security_logger.info("Missing authorization header")
-        raise HTTPException(status_code=401, detail="Missing authorization header")
-    
-    try:
-        token = authorization.split(" ")[1]  # Bearer <token>
-        decoded = jwt.decode(token, "secret", algorithms=["HS256"])  # In production, use proper secret
+# Role-based access control
+def verify_jwt_token_with_role(required_role: str = None):
+    def verify_token(authorization: str = Header(None)):
+        if not authorization:
+            security_logger.info("Missing authorization header")
+            raise HTTPException(status_code=401, detail="Missing authorization header")
         
-        # Check expiry
-        if "exp" in decoded and decoded["exp"] < datetime.utcnow().timestamp():
-            security_logger.info("Expired token")
-            raise HTTPException(status_code=401, detail="Expired token")
+        try:
+            token = authorization.split(" ")[1]  # Bearer <token>
+            decoded = jwt.decode(token, "secret", algorithms=["HS256"])  # In production, use proper secret
             
-        return decoded
-    except jwt.InvalidTokenError as e:
-        security_logger.info(f"Invalid token: {str(e)}")
-        raise HTTPException(status_code=401, detail="Invalid token")
+            # Check expiry
+            if "exp" in decoded and decoded["exp"] < datetime.utcnow().timestamp():
+                security_logger.info("Expired token")
+                raise HTTPException(status_code=401, detail="Expired token")
+            
+            # Check role if required
+            if required_role:
+                if "roles" not in decoded or required_role not in decoded["roles"]:
+                    security_logger.info(f"Insufficient privileges. Required role: {required_role}")
+                    raise HTTPException(status_code=403, detail="Insufficient privileges")
+                    
+            return decoded
+        except jwt.InvalidTokenError as e:
+            security_logger.info(f"Invalid token: {str(e)}")
+            raise HTTPException(status_code=401, detail="Invalid token")
+    return verify_token
 
 # Signature verification function
 def verify_signature(payload: Dict[str, Any], signature: str) -> bool:
@@ -148,6 +173,8 @@ def verify_signature(payload: Dict[str, Any], signature: str) -> bool:
         return True
     except Exception as e:
         security_logger.info(f"Signature verification failed: {str(e)}")
+        global rejected_signatures
+        rejected_signatures += 1
         return False
 
 # Nonce tracking function
@@ -166,6 +193,8 @@ def check_nonce(nonce: str) -> bool:
         # Check if nonce exists
         if nonce in nonce_cache["nonces"]:
             security_logger.info(f"Replay attack detected with nonce: {nonce}")
+            global replay_attempts
+            replay_attempts += 1
             return False
         
         # Add nonce to cache
@@ -223,8 +252,69 @@ def add_to_provenance_chain(payload: Dict[str, Any], timestamp: str):
         security_logger.info(f"Error adding to provenance chain: {str(e)}")
         return None
 
+@app.post("/core/heartbeat", response_model=CoreUpdateResponse)
+async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depends(verify_jwt_token_with_role("module"))):
+    """
+    Receives heartbeat from modules/plugins with signature verification, JWT authentication, and anti-replay protection.
+    """
+    global pending_queue, latencies, last_valid_signature_timestamps
+    try:
+        # Check nonce for anti-replay protection
+        if secure_payload.nonce and not check_nonce(secure_payload.nonce):
+            security_logger.info("Replay attack detected in heartbeat")
+            raise HTTPException(status_code=401, detail="Replay attack detected")
+        
+        # Verify signature
+        if not verify_signature(secure_payload.payload, secure_payload.signature):
+            security_logger.info("Invalid signature for /core/heartbeat")
+            return RejectionResponse(status="rejected", reason="invalid_signature")
+        
+        # Extract payload data
+        payload = HeartbeatPayload(**secure_payload.payload)
+        
+        # Get current timestamp
+        timestamp = datetime.utcnow().isoformat() + "Z"
+        
+        # Add to provenance chain
+        provenance_hash = add_to_provenance_chain(secure_payload.payload, timestamp)
+        
+        # Update last valid signature timestamp for this module
+        last_valid_signature_timestamps[payload.module] = timestamp
+        
+        # Log the heartbeat
+        log_entry = {
+            "module": payload.module,
+            "timestamp": timestamp,
+            "status": payload.status,
+            "metrics": payload.metrics
+        }
+        
+        sync_logger.info(json.dumps(log_entry))
+        
+        # Log metrics
+        metrics_entry = {
+            "timestamp": timestamp,
+            "endpoint": "/core/heartbeat",
+            "module": payload.module,
+            "status": "success",
+            "provenance_hash": provenance_hash
+        }
+        metrics_logger.info(json.dumps(metrics_entry))
+        
+        return CoreUpdateResponse(
+            status="success",
+            timestamp=timestamp,
+            session_id=f"heartbeat-{uuid.uuid4()}",
+            message=f"Heartbeat received and logged for module {payload.module}"
+        )
+        
+    except Exception as e:
+        global error_count_24h
+        error_count_24h += 1
+        raise HTTPException(status_code=500, detail=f"Error processing heartbeat: {str(e)}")
+
 @app.post("/core/update", response_model=CoreUpdateResponse)
-async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(verify_jwt_token)):
+async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(verify_jwt_token_with_role("module"))):
     """
     Receives JSON data from Core with signature verification, JWT authentication, and anti-replay protection.
     """
@@ -316,15 +406,10 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
         raise HTTPException(status_code=500, detail=f"Error processing update: {str(e)}")
 
 @app.get("/bucket/status", response_model=BucketStatusResponse)
-async def bucket_status(token_data: dict = Depends(verify_jwt_token)):
+async def bucket_status(token_data: dict = Depends(verify_jwt_token_with_role("module"))):
     """
     Returns current sync summary (last sync time, total sync count) with JWT authentication.
     """
-    # Verify token has required role
-    if "roles" not in token_data or "module" not in token_data["roles"]:
-        security_logger.info("Insufficient privileges for /bucket/status")
-        raise HTTPException(status_code=403, detail="Insufficient privileges")
-        
     return BucketStatusResponse(
         last_sync_time=sync_summary["last_sync_time"] or "",
         total_sync_count=sync_summary["total_sync_count"],
@@ -334,7 +419,7 @@ async def bucket_status(token_data: dict = Depends(verify_jwt_token)):
 @app.get("/core/health", response_model=HealthResponse)
 async def core_health():
     """
-    Returns health metrics for the Core-Bucket bridge.
+    Returns health metrics for the Core-Bucket bridge including security metrics.
     """
     uptime = time.time() - start_time
     avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
@@ -358,7 +443,12 @@ async def core_health():
         last_sync_ts=sync_summary["last_sync_time"] or "",
         pending_queue=pending_queue,
         error_count_24h=error_count_24h,
-        avg_latency_ms_24h=avg_latency
+        avg_latency_ms_24h=avg_latency,
+        security=SecurityMetrics(
+            rejected_signatures=rejected_signatures,
+            replay_attempts=replay_attempts,
+            last_valid_signature_timestamps=last_valid_signature_timestamps
+        )
     )
 
 # Create insight directory if it doesn't exist

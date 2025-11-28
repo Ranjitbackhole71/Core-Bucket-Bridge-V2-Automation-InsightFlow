@@ -14,6 +14,8 @@ This document provides complete documentation for the Core–Bucket Bridge V3 sy
 ├─ handover_core_bridge_v3.md (This document)
 ├─ test_security.py          (Security feature verification script)
 ├─ test_plugins.py           (Plugin verification script)
+├─ test_heartbeat.py         (Heartbeat endpoint verification script)
+├─ test_health_security.py   (Health endpoint security metrics verification script)
 ├─ generate_keys.py          (RSA keypair generation script)
 ├─ logs/
 │   ├─ core_sync.log         (Core synchronization logs)
@@ -45,7 +47,7 @@ This document provides complete documentation for the Core–Bucket Bridge V3 sy
 
 ### Signature Verification
 
-All requests to POST /core/update and GET /bucket/status require signature verification:
+All requests to POST /core/update, POST /core/heartbeat require signature verification:
 
 1. **Payload Structure**:
 ```json
@@ -60,20 +62,25 @@ All requests to POST /core/update and GET /bucket/status require signature verif
 - Verify signature using RSA-PKCS1v15 with SHA256
 - Reject invalid signatures with `{ "status": "rejected", "reason": "invalid_signature" }`
 
-### JWT Authorization
+### JWT Authorization with RBAC
 
-All endpoints require valid JWT tokens with the following validation:
+All endpoints require valid JWT tokens with role-based access control:
 
 1. **Token Structure**:
 ```
 Authorization: Bearer <jwt-token>
 ```
 
-2. **Validation Checks**:
+2. **Role-Based Access Control**:
+- **module**: Can send heartbeat and data updates
+- **automation**: Can control automation tasks and send heartbeat
+- **admin**: Can access all endpoints including health & security dashboard
+
+3. **Validation Checks**:
 - Token validity (signature verification)
 - Issuer verification
 - Expiry verification
-- Role verification (module / automation / admin)
+- Role verification based on endpoint requirements
 
 ### Anti-Replay Protection
 
@@ -159,9 +166,10 @@ python core_bucket_bridge.py
 ```
 
 The server will start on `http://localhost:8000` with secured endpoints:
-- `POST /core/update` - Receives signed data from Core modules
-- `GET /bucket/status` - Returns current sync summary (requires authorization)
-- `GET /core/health` - Returns health and performance metrics
+- `POST /core/update` - Receives signed data from Core modules (module role required)
+- `POST /core/heartbeat` - Receives signed heartbeat from modules/plugins (module role required)
+- `GET /bucket/status` - Returns current sync summary (module role required)
+- `GET /core/health` - Returns health and performance metrics (no role required)
 
 ### How to Run InsightFlow Dashboard
 
@@ -212,7 +220,7 @@ from datetime import datetime, timedelta
 payload = {
     "iss": "core-bucket-bridge",
     "exp": (datetime.utcnow() + timedelta(hours=1)).timestamp(),
-    "roles": ["module"]
+    "roles": ["module"]  # or ["automation"] or ["admin"]
 }
 token = jwt.encode(payload, "secret", algorithm="HS256")
 ```
@@ -224,11 +232,15 @@ Authorization: Bearer <generated-jwt-token>
 
 ### Replay Protection Workflow
 
-1. Client includes unique "nonce" in each request
-2. Server checks `security/nonce_cache.json` for existing nonce
-3. If found, reject as replay attack
-4. If not found, add to cache and process request
-5. Maintain only last 5000 nonces
+1. **Nonce Generation**: Client generates a cryptographically secure unique nonce for each request
+2. **Payload Signing**: Client signs the payload combined with the nonce using their private key
+3. **Backend Validation**: Server verifies the signature using the public key
+4. **Nonce Checking**: Server checks if the nonce exists in the nonce cache at `security/nonce_cache.json`
+5. **Replay Detection**: If nonce exists, reject as replay attack; if not, accept request
+6. **Nonce Storage**: Valid nonce is stored in cache for future replay detection
+7. **Nonce Expiry**: System maintains only the last 5000 nonces to prevent cache overflow
+
+This workflow ensures that even if an attacker intercepts a valid signed request, they cannot replay it because the nonce will already be in the server's cache.
 
 ### Provenance Hash-Chain Logic
 
@@ -260,6 +272,31 @@ Tests include:
 - Invalid token (rejected)
 - Replay attack (rejected)
 
+### Heartbeat Endpoint Tests
+
+Run the heartbeat verification script:
+```bash
+python test_heartbeat.py
+```
+
+Tests include:
+- Valid heartbeat request (accepted)
+- Invalid signature (rejected)
+- Replay attack (rejected)
+- Role verification
+
+### Health Security Metrics Tests
+
+Run the health security metrics verification script:
+```bash
+python test_health_security.py
+```
+
+Tests include:
+- Health endpoint returns security metrics
+- All required security fields present
+- Metrics update in real time
+
 ### Plugin Tests
 
 Run the plugin verification script:
@@ -277,10 +314,10 @@ Tests include:
 1. **Verify Signature Verification**:
    ```bash
    # Valid request (will be accepted)
-   curl -X POST http://localhost:8000/core/update \
+   curl -X POST http://localhost:8000/core/heartbeat \
         -H "Content-Type: application/json" \
         -H "Authorization: Bearer <valid-jwt-token>" \
-        -d '{"payload": {"module": "test", "data": {"message": "test"}}, "signature": "<valid-signature>"}'
+        -d '{"payload": {"module": "test", "timestamp": "2025-11-28T10:00:00Z", "status": "alive"}, "signature": "<valid-signature>"}'
    ```
 
 2. **Check Security Logs**:
@@ -293,26 +330,31 @@ Tests include:
    cat logs/provenance_chain.jsonl
    ```
 
+4. **Check Health Security Metrics**:
+   ```bash
+   curl http://localhost:8000/core/health
+   ```
+
 ## 📹 Demo Script (60-90 seconds)
 
 ### 1. Valid Request Demonstration
 ```bash
-# Show a valid signed request being accepted
-python test_security.py
-# Select "Valid Request" test
+# Show a valid signed heartbeat being accepted
+python test_heartbeat.py
+# Select "Valid Heartbeat" test
 ```
 
 ### 2. Security Rejection Demonstration
 ```bash
 # Show invalid signature being rejected
-python test_security.py
+python test_heartbeat.py
 # Select "Invalid Signature" test
 ```
 
 ### 3. Replay Attack Prevention
 ```bash
 # Show replay attack being rejected
-python test_security.py
+python test_heartbeat.py
 # Select "Replay Attack" test
 ```
 
@@ -334,7 +376,13 @@ tail automation/reports/engine.log
 ### 6. Heartbeats in Dashboard/Logs
 ```bash
 # Show heartbeat entries in logs
-grep "heartbeat" automation/reports/engine.log
+grep "heartbeat" logs/core_sync.log
+```
+
+### 7. Health Security Metrics
+```bash
+# Show health endpoint with security metrics
+python test_health_security.py
 ```
 
 ## 📋 Expected Output & Verification Checklist
@@ -342,8 +390,16 @@ grep "heartbeat" automation/reports/engine.log
 ✅ **Security Hardening**:
 - Signature verification working
 - JWT auth rejecting invalid tokens
+- RBAC enforcing role separation
 - Anti-replay protection preventing duplicates
 - Provenance chain maintaining integrity
+
+✅ **Heartbeat API**:
+- POST /core/heartbeat endpoint exists and is secure
+- Accepts valid signed heartbeats
+- Rejects invalid signatures
+- Prevents replay attacks
+- Enforces role-based access
 
 ✅ **Plugin Engine**:
 - Plugins loading and executing correctly
@@ -357,6 +413,7 @@ grep "heartbeat" automation/reports/engine.log
 - Plugin usage guide
 - Replay protection workflow
 - Provenance hash-chain logic
+- Replay workflow diagram and explanation
 
 ✅ **Demo Script**:
 - Valid requests accepted
@@ -365,6 +422,7 @@ grep "heartbeat" automation/reports/engine.log
 - Provenance chain growing
 - Plugins executing
 - Heartbeats visible
+- Health endpoint shows security metrics
 
 ✅ **Backend Integration**:
 - All new logs created and updated
@@ -377,6 +435,8 @@ grep "heartbeat" automation/reports/engine.log
 - **Enhanced Security**: Public-key signatures, JWT auth, anti-replay protection
 - **Provenance Tracking**: Immutable hash chain for audit trail
 - **Plugin Architecture**: Extensible automation through dynamic plugins
+- **Role-Based Access Control**: Fine-grained endpoint access control
+- **Real-time Security Metrics**: Live security analytics in health endpoint
 - **Comprehensive Logging**: Detailed security and automation logs
 - **Modular Design**: Easy to extend and maintain
 - **Cross-platform Compatibility**: Works on Windows, macOS, and Linux

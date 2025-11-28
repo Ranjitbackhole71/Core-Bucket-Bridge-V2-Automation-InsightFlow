@@ -105,6 +105,7 @@ python core_bucket_bridge.py
 
 The server will start on `http://localhost:8000` with secured endpoints:
 - `POST /core/update` - Receives signed data from Core modules
+- `POST /core/heartbeat` - Receives signed heartbeat from modules/plugins
 - `GET /bucket/status` - Returns current sync summary (requires JWT auth)
 - `GET /core/health` - Returns health and performance metrics
 
@@ -171,6 +172,39 @@ Authorization: Bearer <jwt-token>
 }
 ```
 
+### POST /core/heartbeat (Secured)
+
+Receives signed heartbeat from modules/plugins with JWT authentication.
+
+**Request Body**:
+```json
+{
+  "payload": {
+    "module": "string",
+    "timestamp": "ISO8601-timestamp",
+    "status": "alive|dead|warning",
+    "metrics": {}
+  },
+  "signature": "base64-encoded-RSA-signature",
+  "nonce": "unique-string-for-anti-replay"
+}
+```
+
+**Headers**:
+```
+Authorization: Bearer <jwt-token>
+```
+
+**Response**:
+```json
+{
+  "status": "success",
+  "timestamp": "2025-10-16T10:20:00Z",
+  "session_id": "heartbeat-uuid-string",
+  "message": "Heartbeat received and logged for module education"
+}
+```
+
 ### GET /bucket/status (Secured)
 
 Returns current sync summary with JWT authentication.
@@ -195,7 +229,7 @@ Authorization: Bearer <jwt-token>
 
 ### GET /core/health
 
-Returns health metrics for the Core-Bucket bridge.
+Returns health metrics for the Core-Bucket bridge including security metrics.
 
 **Response**:
 ```json
@@ -205,7 +239,15 @@ Returns health metrics for the Core-Bucket bridge.
   "last_sync_ts": "2025-10-16T10:20:00Z",
   "pending_queue": 0,
   "error_count_24h": 0,
-  "avg_latency_ms_24h": 45.5
+  "avg_latency_ms_24h": 45.5,
+  "security": {
+    "rejected_signatures": 0,
+    "replay_attempts": 0,
+    "last_valid_signature_timestamps": {
+      "education": "2025-10-16T10:20:00Z",
+      "finance": "2025-10-16T10:15:00Z"
+    }
+  }
 }
 ```
 
@@ -265,6 +307,43 @@ Configuration is in `automation/config.json` with support for:
 - SHA256-based immutable audit trail
 - Stored in `logs/provenance_chain.jsonl`
 - Continuity verification for all events
+
+## Replay Protection Workflow
+
+The anti-replay protection system prevents attackers from reusing valid signatures to perform replay attacks. Here's how it works:
+
+```
+Client                    Server
+  │                         │
+  │───1. Generate Nonce────▶│
+  │                         │
+  │◀───2. Return Nonce──────│
+  │                         │
+  │                         │
+  │───3. Create Payload────▶│
+  │                         │
+  │───4. Sign Payload+Nonce▶│
+  │                         │
+  │                         │
+  │───5. Send Request──────▶│
+  │                         │
+  │                         │ 6. Validate Signature
+  │                         │ 7. Check Nonce Uniqueness
+  │                         │ 8. Process Request
+  │                         │ 9. Store Nonce
+  │◀──10. Return Response───│
+```
+
+Steps:
+1. **Nonce Generation**: Client generates a cryptographically secure unique nonce for each request
+2. **Payload Signing**: Client signs the payload combined with the nonce using their private key
+3. **Backend Validation**: Server verifies the signature using the public key
+4. **Nonce Checking**: Server checks if the nonce exists in the nonce cache
+5. **Replay Detection**: If nonce exists, reject as replay attack; if not, accept request
+6. **Nonce Storage**: Valid nonce is stored in cache for future replay detection
+7. **Nonce Expiry**: System maintains only the last 5000 nonces to prevent cache overflow
+
+This workflow ensures that even if an attacker intercepts a valid signed request, they cannot replay it because the nonce will already be in the server's cache.
 
 ## 🧪 Testing
 

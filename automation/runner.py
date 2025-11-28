@@ -9,12 +9,16 @@ import json
 import time
 import requests
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import uuid
 import logging
 from logging.handlers import RotatingFileHandler
 import importlib.util
 import sys
+import jwt
+import base64
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import padding
 
 # Set up logging
 log_dir = "reports"
@@ -36,7 +40,18 @@ class AutomationRunner:
         self.config_path = config_path
         self.api_base_url = api_base_url
         self.load_config()
+        self.load_private_key()
         
+    def load_private_key(self):
+        """Load private key for signing requests"""
+        try:
+            with open("security/private.pem", "rb") as key_file:
+                self.private_key = serialization.load_pem_private_key(key_file.read(), password=None)
+            logger.info("Loaded private key for signing")
+        except Exception as e:
+            logger.error(f"Error loading private key: {e}")
+            self.private_key = None
+            
     def load_config(self):
         """Load configuration from JSON file"""
         try:
@@ -50,50 +65,142 @@ class AutomationRunner:
             logger.error(f"Error parsing config file: {e}")
             raise
             
+    def sign_payload(self, payload):
+        """Sign a payload with RSA private key"""
+        if not self.private_key:
+            logger.error("Private key not loaded")
+            return None
+            
+        try:
+            payload_bytes = json.dumps(payload, sort_keys=True).encode('utf-8')
+            signature = self.private_key.sign(
+                payload_bytes,
+                padding.PKCS1v15(),
+                hashes.SHA256()
+            )
+            return base64.b64encode(signature).decode('utf-8')
+        except Exception as e:
+            logger.error(f"Error signing payload: {e}")
+            return None
+            
+    def create_jwt_token(self, roles=["module"]):
+        """Create a JWT token for requests"""
+        try:
+            payload = {
+                "iss": "core-bucket-bridge",
+                "exp": (datetime.utcnow() + timedelta(hours=1)).timestamp(),
+                "roles": roles
+            }
+            token = jwt.encode(payload, "secret", algorithm="HS256")
+            return f"Bearer {token}"
+        except Exception as e:
+            logger.error(f"Error creating JWT token: {e}")
+            return None
+            
+    def send_secure_request(self, endpoint, payload, roles=["module"]):
+        """Send a secure request with signature and JWT token"""
+        # Sign the payload
+        signature = self.sign_payload(payload)
+        if not signature:
+            logger.error(f"Failed to sign payload for {endpoint}")
+            return None
+            
+        # Create JWT token
+        token = self.create_jwt_token(roles)
+        if not token:
+            logger.error(f"Failed to create JWT token for {endpoint}")
+            return None
+            
+        # Create secure payload
+        secure_payload = {
+            "payload": payload,
+            "signature": signature,
+            "nonce": str(uuid.uuid4())  # Unique nonce for each request
+        }
+        
+        # Send request
+        url = f"{self.api_base_url}{endpoint}"
+        headers = {
+            "Authorization": token,
+            "Content-Type": "application/json"
+        }
+        
+        # Retry logic (up to 3 attempts with exponential backoff)
+        for attempt in range(3):
+            try:
+                response = requests.post(url, json=secure_payload, headers=headers, timeout=30)
+                if response.status_code == 200:
+                    logger.info(f"Successfully sent secure request to {endpoint}")
+                    return response.json()
+                else:
+                    logger.warning(f"Attempt {attempt+1} failed with status {response.status_code} for {endpoint}")
+            except requests.RequestException as e:
+                logger.warning(f"Attempt {attempt+1} failed with exception for {endpoint}: {e}")
+                
+            if attempt < 2:  # Don't sleep after the last attempt
+                # Exponential backoff: 1s, 2s, 4s
+                sleep_time = 2 ** attempt
+                logger.info(f"Retrying {endpoint} in {sleep_time} seconds...")
+                time.sleep(sleep_time)
+                
+        logger.error(f"Failed to send secure request to {endpoint} after 3 attempts")
+        return None
+        
     def send_core_update(self, module_data):
-        """Send data to core update endpoint with retry logic"""
-        url = f"{self.api_base_url}/core/update"
+        """Send data to core update endpoint with signature and JWT"""
         payload = {
             "module": module_data["module"],
             "data": module_data["data"],
             "session_id": str(uuid.uuid4())
         }
         
+        return self.send_secure_request("/core/update", payload, ["module"])
+        
+    def send_heartbeat(self, heartbeat_data):
+        """Send heartbeat to core heartbeat endpoint with signature and JWT"""
+        payload = {
+            "module": heartbeat_data["module"],
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "status": heartbeat_data.get("status", "alive"),
+            "metrics": heartbeat_data.get("metrics", {})
+        }
+        
+        return self.send_secure_request("/core/heartbeat", payload, ["module"])
+        
+    def get_bucket_status(self):
+        """Get bucket status with JWT authentication"""
+        url = f"{self.api_base_url}/bucket/status"
+        
+        # Create JWT token
+        token = self.create_jwt_token(["module"])
+        if not token:
+            logger.error("Failed to create JWT token for bucket status")
+            return None
+            
+        headers = {
+            "Authorization": token
+        }
+        
         # Retry logic (up to 3 attempts with exponential backoff)
         for attempt in range(3):
             try:
-                response = requests.post(url, json=payload, timeout=30)
+                response = requests.get(url, headers=headers, timeout=30)
                 if response.status_code == 200:
-                    logger.info(f"Successfully sent {module_data['module']} data")
+                    logger.info("Successfully retrieved bucket status")
                     return response.json()
                 else:
-                    logger.warning(f"Attempt {attempt+1} failed with status {response.status_code}")
+                    logger.warning(f"Attempt {attempt+1} failed with status {response.status_code} for bucket status")
             except requests.RequestException as e:
-                logger.warning(f"Attempt {attempt+1} failed with exception: {e}")
+                logger.warning(f"Attempt {attempt+1} failed with exception for bucket status: {e}")
                 
             if attempt < 2:  # Don't sleep after the last attempt
                 # Exponential backoff: 1s, 2s, 4s
                 sleep_time = 2 ** attempt
-                logger.info(f"Retrying in {sleep_time} seconds...")
+                logger.info(f"Retrying bucket status in {sleep_time} seconds...")
                 time.sleep(sleep_time)
                 
-        logger.error(f"Failed to send {module_data['module']} data after 3 attempts")
+        logger.error("Failed to get bucket status after 3 attempts")
         return None
-        
-    def get_bucket_status(self):
-        """Get bucket status"""
-        url = f"{self.api_base_url}/bucket/status"
-        try:
-            response = requests.get(url, timeout=30)
-            if response.status_code == 200:
-                logger.info("Successfully retrieved bucket status")
-                return response.json()
-            else:
-                logger.error(f"Failed to get bucket status: {response.status_code}")
-                return None
-        except requests.RequestException as e:
-            logger.error(f"Error getting bucket status: {e}")
-            return None
             
     def load_plugin(self, plugin_name):
         """Dynamically load a plugin"""
@@ -162,6 +269,13 @@ class AutomationRunner:
             if action_type == "send_core_update":
                 module_data = action.get("data", {})
                 response = self.send_core_update(module_data)
+                action_result["success"] = response is not None
+                action_result["details"] = response
+                results["actions"].append(action_result)
+                
+            elif action_type == "send_heartbeat":
+                heartbeat_data = action.get("data", {})
+                response = self.send_heartbeat(heartbeat_data)
                 action_result["success"] = response is not None
                 action_result["details"] = response
                 results["actions"].append(action_result)

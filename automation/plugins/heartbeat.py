@@ -8,7 +8,7 @@ from datetime import datetime
 def run():
     """Run heartbeat plugin"""
     heartbeat_data = {
-        "module": "automation",
+        "module": "automation_plugin",
         "heartbeat_ts": datetime.utcnow().isoformat() + "Z",
         "status": "alive",
         "metrics": {

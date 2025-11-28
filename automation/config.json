@@ -103,8 +103,15 @@
       },
       "actions": [
         {
-          "type": "run_plugin",
-          "plugin_name": "heartbeat"
+          "type": "send_heartbeat",
+          "data": {
+            "module": "automation",
+            "status": "alive",
+            "metrics": {
+              "uptime": 3600,
+              "jobs_executed": 10
+            }
+          }
         }
       ]
     },
