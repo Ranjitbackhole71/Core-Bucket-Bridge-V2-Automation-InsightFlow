@@ -1,0 +1,232 @@
+{
+	"info": {
+		"_postman_id": "core-bridge-v4-collection",
+		"name": "Core-Bucket Bridge V4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Core Update",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payload\": {\n    \"module\": \"education\",\n    \"data\": {\n      \"course_id\": \"CS101\",\n      \"course_name\": \"Introduction to Computer Science\",\n      \"students_enrolled\": 150,\n      \"instructor\": \"Dr. Smith\"\n    }\n  },\n  \"signature\": \"{{signature}}\",\n  \"nonce\": \"{{nonce}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/core/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"core",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Core Heartbeat",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payload\": {\n    \"module\": \"automation\",\n    \"timestamp\": \"2025-12-01T10:00:00Z\",\n    \"status\": \"alive\",\n    \"metrics\": {\n      \"uptime\": 3600,\n      \"jobs_executed\": 10\n    }\n  },\n  \"signature\": \"{{signature}}\",\n  \"nonce\": \"{{nonce}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/core/heartbeat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"core",
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bucket Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/bucket/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"bucket",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Core Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/core/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"core",
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Replay Attack Test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payload\": {\n    \"module\": \"test\",\n    \"timestamp\": \"2025-12-01T10:00:00Z\",\n    \"status\": \"alive\"\n  },\n  \"signature\": \"{{signature}}\",\n  \"nonce\": \"{{replay_nonce}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/core/heartbeat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"core",
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Signature Test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"payload\": {\n    \"module\": \"test\",\n    \"timestamp\": \"2025-12-01T10:00:00Z\",\n    \"status\": \"alive\"\n  },\n  \"signature\": \"invalid_signature_here\",\n  \"nonce\": \"{{nonce}}\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8000/core/heartbeat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"core",
+						"heartbeat"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Generate a unique nonce for each request",
+					"const uuid = require('uuid');",
+					"pm.environment.set('nonce', uuid.v4());",
+					"",
+					"// For replay attack test, use a fixed nonce",
+					"pm.environment.set('replay_nonce', 'test-replay-nonce-123');",
+					"",
+					"// Generate JWT token (this is a placeholder - in real usage, you would generate a valid token)",
+					"pm.environment.set('jwt_token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjb3JlLWJ1Y2tldC1icmlkZ2UiLCJleHAiOjk5OTk5OTk5OTksInJvbGVzIjpbIm1vZHVsZSJdfQ.placeholder_signature');",
+					"",
+					"// Generate signature (this is a placeholder - in real usage, you would sign the payload)",
+					"pm.environment.set('signature', 'placeholder_signature_base64');"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000"
+		}
+	]
+}

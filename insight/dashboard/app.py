@@ -30,6 +30,73 @@ def read_flow_log():
                         continue
     return flow_data
 
+# Function to read security rejects log
+def read_security_rejects_log():
+    security_data = []
+    if os.path.exists("logs/security_rejects.log"):
+        with open("logs/security_rejects.log", "r") as f:
+            for line in f:
+                if line.strip():
+                    try:
+                        # Parse the log line (timestamp - message)
+                        parts = line.strip().split(' - ', 1)
+                        if len(parts) == 2:
+                            timestamp, message = parts
+                            security_data.append({
+                                "timestamp": timestamp,
+                                "message": message
+                            })
+                    except Exception:
+                        continue
+    return security_data
+
+# Function to read heartbeat log
+def read_heartbeat_log():
+    heartbeat_data = []
+    if os.path.exists("logs/heartbeat.log"):
+        with open("logs/heartbeat.log", "r") as f:
+            for line in f:
+                if line.strip():
+                    try:
+                        heartbeat_data.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+    return heartbeat_data
+
+# Function to read provenance chain
+def read_provenance_chain():
+    provenance_data = []
+    if os.path.exists("logs/provenance_chain.jsonl"):
+        with open("logs/provenance_chain.jsonl", "r") as f:
+            for line in f:
+                if line.strip():
+                    try:
+                        provenance_data.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        continue
+    return provenance_data
+
+# Function to read plugin errors
+def read_plugin_errors():
+    plugin_errors = []
+    if os.path.exists("automation/reports/plugin_errors.log"):
+        with open("automation/reports/plugin_errors.log", "r") as f:
+            for line in f:
+                if line.strip():
+                    try:
+                        # Parse the log line (timestamp - level - message)
+                        parts = line.strip().split(' - ', 2)
+                        if len(parts) == 3:
+                            timestamp, level, message = parts
+                            plugin_errors.append({
+                                "timestamp": timestamp,
+                                "level": level,
+                                "message": message
+                            })
+                    except Exception:
+                        continue
+    return plugin_errors
+
 # Function to read metrics log
 def read_metrics_log():
     metrics_data = []
@@ -108,6 +175,18 @@ flow_data = read_flow_log()
 # Read metrics data
 metrics_data = read_metrics_log()
 
+# Read security rejects data
+security_rejects_data = read_security_rejects_log()
+
+# Read heartbeat data
+heartbeat_data = read_heartbeat_log()
+
+# Read provenance chain data
+provenance_data = read_provenance_chain()
+
+# Read plugin errors data
+plugin_errors_data = read_plugin_errors()
+
 # Calculate metrics
 success_rate, avg_latency, error_count, queue_depth, last_sync_times, overall_last_sync = calculate_metrics(flow_data, metrics_data)
 
@@ -142,8 +221,80 @@ if last_sync_times:
 else:
     st.info("No sync events recorded yet.")
 
+# Security Events Panel
+st.subheader("🔒 Security Events")
+if security_rejects_data:
+    # Convert to DataFrame for better display
+    df = pd.DataFrame(security_rejects_data)
+    # Sort by timestamp (newest first)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+        df = df.sort_values('timestamp', ascending=False)
+    
+    # Display table
+    st.dataframe(df.head(10), width='stretch')  # Show only last 10 events
+else:
+    st.info("No security events recorded yet.")
+
+# Node Health View
+st.subheader("🖥️ Node Health View")
+st.info("Multi-node health view will be displayed here when nodes are running.")
+# In a full implementation, this would show health metrics for each node
+
+# Automation Engine Events Panel
+st.subheader("⚙️ Automation Engine Events")
+
+# Show plugin errors
+st.markdown("**Plugin Errors:**")
+if plugin_errors_data:
+    # Convert to DataFrame for better display
+    df = pd.DataFrame(plugin_errors_data)
+    # Sort by timestamp (newest first)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+        df = df.sort_values('timestamp', ascending=False)
+    
+    # Display table
+    st.dataframe(df.head(10), width='stretch')  # Show only last 10 events
+else:
+    st.info("No plugin errors recorded yet.")
+
+# Show heartbeat events
+st.markdown("**Heartbeat Events:**")
+if heartbeat_data:
+    # Convert to DataFrame for better display
+    df = pd.DataFrame(heartbeat_data)
+    # Sort by timestamp (newest first)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+        df = df.sort_values('timestamp', ascending=False)
+    
+    # Display table
+    st.dataframe(df.head(10), width='stretch')  # Show only last 10 events
+else:
+    st.info("No heartbeat events recorded yet.")
+
+# Show provenance chain
+st.markdown("**Provenance Chain Entries:**")
+if provenance_data:
+    # Convert to DataFrame for better display
+    df = pd.DataFrame(provenance_data)
+    # Sort by timestamp (newest first)
+    if 'timestamp' in df.columns:
+        df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
+        df = df.sort_values('timestamp', ascending=False)
+    
+    # Display table with limited columns for better readability
+    if 'hash' in df.columns and 'timestamp' in df.columns:
+        display_df = df[['timestamp', 'hash']].head(10)  # Show only last 10 entries
+        st.dataframe(display_df, width='stretch')
+    else:
+        st.dataframe(df.head(10), width='stretch')
+else:
+    st.info("No provenance chain entries recorded yet.")
+
 # Sync events table
-st.subheader("Sync Events History")
+st.subheader("🔄 Sync Events History")
 if flow_data:
     # Convert to DataFrame for better display
     df = pd.DataFrame(flow_data)
@@ -153,7 +304,7 @@ if flow_data:
         df = df.sort_values('timestamp', ascending=False)
     
     # Display table
-    st.dataframe(df, width='stretch')
+    st.dataframe(df.head(20), width='stretch')  # Show only last 20 events
 else:
     st.info("No sync events recorded yet. Waiting for data...")
 

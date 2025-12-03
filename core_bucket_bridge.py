@@ -45,6 +45,14 @@ security_formatter = logging.Formatter('%(asctime)s - %(message)s')
 security_handler.setFormatter(security_formatter)
 security_logger.addHandler(security_handler)
 
+# Set up heartbeat logging
+heartbeat_logger = logging.getLogger("heartbeat_logger")
+heartbeat_logger.setLevel(logging.INFO)
+heartbeat_handler = RotatingFileHandler("logs/heartbeat.log", maxBytes=1000000, backupCount=5)
+heartbeat_formatter = logging.Formatter('%(asctime)s - %(message)s')
+heartbeat_handler.setFormatter(heartbeat_formatter)
+heartbeat_logger.addHandler(heartbeat_handler)
+
 # Health monitoring variables
 start_time = time.time()
 error_count_24h = 0
@@ -55,6 +63,7 @@ latencies = []  # Store latencies for averaging
 rejected_signatures = 0
 replay_attempts = 0
 last_valid_signature_timestamps = {}  # {plugin_id: timestamp}
+last_nonce = None  # Track the last nonce used
 
 # In-memory storage for sync summary (in production, use a database)
 sync_summary = {
@@ -105,9 +114,10 @@ class BucketStatusResponse(BaseModel):
     module_sync_counts: Dict[str, int]
 
 class SecurityMetrics(BaseModel):
-    rejected_signatures: int
-    replay_attempts: int
-    last_valid_signature_timestamps: Dict[str, str]
+    signature_rejects_24h: int
+    replay_rejects_24h: int
+    last_valid_signature_ts: Dict[str, str]
+    last_nonce: Optional[str] = None
 
 class HealthResponse(BaseModel):
     status: str
@@ -150,6 +160,37 @@ def verify_jwt_token_with_role(required_role: str = None):
             raise HTTPException(status_code=401, detail="Invalid token")
     return verify_token
 
+# Enhanced RBAC decorators as required
+
+def requires_role(role: str):
+    """
+    Decorator for role-based access control
+    """
+    def role_checker(authorization: str = Header(None)):
+        if not authorization:
+            security_logger.info(f"Missing authorization header for role: {role}")
+            raise HTTPException(status_code=401, detail="Missing authorization header")
+        
+        try:
+            token = authorization.split(" ")[1]  # Bearer <token>
+            decoded = jwt.decode(token, "secret", algorithms=["HS256"])  # In production, use proper secret
+            
+            # Check expiry
+            if "exp" in decoded and decoded["exp"] < datetime.utcnow().timestamp():
+                security_logger.info(f"Expired token for role: {role}")
+                raise HTTPException(status_code=401, detail="Expired token")
+            
+            # Check role
+            if "roles" not in decoded or role not in decoded["roles"]:
+                security_logger.info(f"Insufficient privileges. Required role: {role}")
+                raise HTTPException(status_code=403, detail="Insufficient privileges")
+                
+            return decoded
+        except jwt.InvalidTokenError as e:
+            security_logger.info(f"Invalid token for role {role}: {str(e)}")
+            raise HTTPException(status_code=401, detail="Invalid token")
+    return role_checker
+
 # Signature verification function
 def verify_signature(payload: Dict[str, Any], signature: str) -> bool:
     if not public_key:
@@ -175,6 +216,17 @@ def verify_signature(payload: Dict[str, Any], signature: str) -> bool:
         security_logger.info(f"Signature verification failed: {str(e)}")
         global rejected_signatures
         rejected_signatures += 1
+        
+        # Add InsightFlow hook for signature rejections
+        insight_hook_entry = {
+            "event_type": "signature_rejection",
+            "timestamp": datetime.utcnow().isoformat() + "Z",
+            "error": str(e)
+        }
+        
+        with open("insight/flow.log", "a") as f:
+            f.write(json.dumps(insight_hook_entry) + "\n")
+        
         return False
 
 # Nonce tracking function
@@ -195,6 +247,17 @@ def check_nonce(nonce: str) -> bool:
             security_logger.info(f"Replay attack detected with nonce: {nonce}")
             global replay_attempts
             replay_attempts += 1
+                    
+            # Add InsightFlow hook for replay rejections
+            insight_hook_entry = {
+                "event_type": "replay_rejection",
+                "timestamp": datetime.utcnow().isoformat() + "Z",
+                "nonce": nonce
+            }
+                    
+            with open("insight/flow.log", "a") as f:
+                f.write(json.dumps(insight_hook_entry) + "\n")
+                    
             return False
         
         # Add nonce to cache
@@ -207,6 +270,10 @@ def check_nonce(nonce: str) -> bool:
         # Save nonce cache
         with open("security/nonce_cache.json", "w") as f:
             json.dump(nonce_cache, f)
+        
+        # Track last nonce used
+        global last_nonce
+        last_nonce = nonce
         
         return True
     except Exception as e:
@@ -247,13 +314,24 @@ def add_to_provenance_chain(payload: Dict[str, Any], timestamp: str):
         with open("logs/provenance_chain.jsonl", "a") as f:
             f.write(json.dumps(chain_entry) + "\n")
             
+        # Add InsightFlow hook for provenance chain entries
+        insight_hook_entry = {
+            "event_type": "provenance_chain",
+            "timestamp": timestamp,
+            "hash": new_hash,
+            "previous_hash": last_hash
+        }
+        
+        with open("insight/flow.log", "a") as f:
+            f.write(json.dumps(insight_hook_entry) + "\n")
+            
         return new_hash
     except Exception as e:
         security_logger.info(f"Error adding to provenance chain: {str(e)}")
         return None
 
 @app.post("/core/heartbeat", response_model=CoreUpdateResponse)
-async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depends(verify_jwt_token_with_role("module"))):
+async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depends(requires_role("module"))):
     """
     Receives heartbeat from modules/plugins with signature verification, JWT authentication, and anti-replay protection.
     """
@@ -281,7 +359,7 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
         # Update last valid signature timestamp for this module
         last_valid_signature_timestamps[payload.module] = timestamp
         
-        # Log the heartbeat
+        # Log the heartbeat to both sync logger and dedicated heartbeat logger
         log_entry = {
             "module": payload.module,
             "timestamp": timestamp,
@@ -290,6 +368,19 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
         }
         
         sync_logger.info(json.dumps(log_entry))
+        heartbeat_logger.info(json.dumps(log_entry))
+        
+        # Add InsightFlow hook for heartbeat events
+        insight_hook_entry = {
+            "event_type": "heartbeat",
+            "module": payload.module,
+            "timestamp": timestamp,
+            "status": payload.status,
+            "metrics": payload.metrics
+        }
+        
+        with open("insight/flow.log", "a") as f:
+            f.write(json.dumps(insight_hook_entry) + "\n")
         
         # Log metrics
         metrics_entry = {
@@ -314,7 +405,7 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
         raise HTTPException(status_code=500, detail=f"Error processing heartbeat: {str(e)}")
 
 @app.post("/core/update", response_model=CoreUpdateResponse)
-async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(verify_jwt_token_with_role("module"))):
+async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(requires_role("module"))):
     """
     Receives JSON data from Core with signature verification, JWT authentication, and anti-replay protection.
     """
@@ -378,6 +469,18 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
         # Write to insight flow log
         with open("insight/flow.log", "a") as f:
             f.write(json.dumps(insight_entry) + "\n")
+        
+        # Add InsightFlow hook for core update events
+        insight_hook_entry = {
+            "event_type": "core_update",
+            "module": payload.module,
+            "timestamp": timestamp,
+            "latency_ms": latency,
+            "status": "success"
+        }
+        
+        with open("insight/flow.log", "a") as f:
+            f.write(json.dumps(insight_hook_entry) + "\n")
             
         # Log metrics
         metrics_entry = {
@@ -406,7 +509,7 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
         raise HTTPException(status_code=500, detail=f"Error processing update: {str(e)}")
 
 @app.get("/bucket/status", response_model=BucketStatusResponse)
-async def bucket_status(token_data: dict = Depends(verify_jwt_token_with_role("module"))):
+async def bucket_status(token_data: dict = Depends(requires_role("module"))):
     """
     Returns current sync summary (last sync time, total sync count) with JWT authentication.
     """
@@ -445,9 +548,10 @@ async def core_health():
         error_count_24h=error_count_24h,
         avg_latency_ms_24h=avg_latency,
         security=SecurityMetrics(
-            rejected_signatures=rejected_signatures,
-            replay_attempts=replay_attempts,
-            last_valid_signature_timestamps=last_valid_signature_timestamps
+            signature_rejects_24h=rejected_signatures,
+            replay_rejects_24h=replay_attempts,
+            last_valid_signature_ts=last_valid_signature_timestamps,
+            last_nonce=last_nonce
         )
     )
 

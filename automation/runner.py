@@ -35,10 +35,23 @@ formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)
 logger.addHandler(handler)
 
+# Set up plugin error logging
+plugin_error_logger = logging.getLogger("plugin_errors")
+plugin_error_logger.setLevel(logging.ERROR)
+plugin_error_handler = RotatingFileHandler(
+    os.path.join(log_dir, "plugin_errors.log"), 
+    maxBytes=1000000, 
+    backupCount=5
+)
+plugin_error_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+plugin_error_handler.setFormatter(plugin_error_formatter)
+plugin_error_logger.addHandler(plugin_error_handler)
+
 class AutomationRunner:
-    def __init__(self, config_path="config.json", api_base_url="http://localhost:8000"):
+    def __init__(self, config_path="config.json", api_base_url="http://localhost:8000", node_id=None):
         self.config_path = config_path
         self.api_base_url = api_base_url
+        self.node_id = node_id
         self.load_config()
         self.load_private_key()
         
@@ -99,6 +112,10 @@ class AutomationRunner:
             
     def send_secure_request(self, endpoint, payload, roles=["module"]):
         """Send a secure request with signature and JWT token"""
+        # Add node_id to payload if running in multi-node mode
+        if self.node_id:
+            payload["node_id"] = self.node_id
+            
         # Sign the payload
         signature = self.sign_payload(payload)
         if not signature:
@@ -222,6 +239,9 @@ class AutomationRunner:
         """Execute a plugin and log results"""
         plugin = self.load_plugin(plugin_name)
         if not plugin:
+            error_msg = f"Plugin {plugin_name} not found or failed to load"
+            logger.error(error_msg)
+            plugin_error_logger.error(error_msg)
             return None
             
         try:
@@ -236,13 +256,20 @@ class AutomationRunner:
                 "result": result
             }
             
-            engine_log_path = os.path.join(log_dir, "engine.log")
+            # Use node-specific log directory if in multi-node mode
+            if self.node_id:
+                engine_log_path = os.path.join(log_dir, self.node_id, "engine.log")
+            else:
+                engine_log_path = os.path.join(log_dir, "engine.log")
+                
             with open(engine_log_path, "a") as f:
                 f.write(json.dumps(log_entry) + "\n")
                 
             return result
         except Exception as e:
-            logger.error(f"Error executing plugin {plugin_name}: {e}")
+            error_msg = f"Error executing plugin {plugin_name}: {e}"
+            logger.error(error_msg)
+            plugin_error_logger.error(error_msg)
             return None
             
     def execute_job(self, job):
@@ -358,6 +385,12 @@ def main():
         default=120,
         help="Interval in minutes for watch mode (default: 120 minutes)"
     )
+    parser.add_argument(
+        "--nodes", 
+        type=int, 
+        default=1,
+        help="Number of nodes to run in parallel (default: 1)"
+    )
     
     args = parser.parse_args()
     
@@ -365,17 +398,49 @@ def main():
         parser.print_help()
         return
         
-    try:
-        runner = AutomationRunner(config_path=args.config)
+    if args.nodes > 1:
+        # Multi-node mode
+        import threading
+        threads = []
         
-        if args.once:
-            runner.run_once()
-        elif args.watch:
-            runner.run_watch(interval_minutes=args.interval)
+        # Create separate log directories for each node
+        for i in range(args.nodes):
+            node_id = f"node-{i+1:03d}"  # node-001, node-002, etc.
+            node_log_dir = f"automation/reports/{node_id}"
+            os.makedirs(node_log_dir, exist_ok=True)
             
-    except Exception as e:
-        logger.error(f"Failed to start automation runner: {e}")
-        return 1
+            # Create thread for each node
+            def run_node(node_id):
+                try:
+                    runner = AutomationRunner(config_path=args.config, node_id=node_id)
+                    
+                    if args.once:
+                        runner.run_once()
+                    elif args.watch:
+                        runner.run_watch(interval_minutes=args.interval)
+                except Exception as e:
+                    logger.error(f"Failed to start node {node_id}: {e}")
+            
+            thread = threading.Thread(target=run_node, args=(node_id,))
+            threads.append(thread)
+            thread.start()
+            
+        # Wait for all threads to complete
+        for thread in threads:
+            thread.join()
+    else:
+        # Single node mode
+        try:
+            runner = AutomationRunner(config_path=args.config)
+            
+            if args.once:
+                runner.run_once()
+            elif args.watch:
+                runner.run_watch(interval_minutes=args.interval)
+                
+        except Exception as e:
+            logger.error(f"Failed to start automation runner: {e}")
+            return 1
         
     return 0
 

@@ -303,6 +303,70 @@ Configuration is in `automation/config.json` with support for:
 - Automatic rejection of replay attacks
 - Maintains last 5000 nonces
 
+### Replay Protection Workflow
+
+The anti-replay protection system prevents attackers from reusing valid signatures to perform replay attacks. Here's how it works:
+
+```
+                    ┌─────────────────────┐
+                    │   Client/System     │
+                    └─────────┬───────────┘
+                              │
+                    1. Generate Nonce
+                              │
+                    ┌─────────▼───────────┐
+                    │   Nonce Generator   │
+                    │  (Cryptographically │
+                    │   Secure Random)    │
+                    └─────────┬───────────┘
+                              │
+                    2. Create Payload
+                              │
+                    ┌─────────▼───────────┐
+                    │   Payload Creator   │
+                    │  (Data + Nonce)     │
+                    └─────────┬───────────┘
+                              │
+                    3. Sign Payload
+                              │
+                    ┌─────────▼───────────┐
+                    │   Signature Engine  │
+                    │ (Private Key +      │
+                    │  RSA-PKCS1v15)      │
+                    └─────────┬───────────┘
+                              │
+                    4. Send Request
+                              │
+         ┌──────────────────▼──────────────────┐
+         │        Core-Bucket Bridge API        │
+         │              (Server)                │
+         └─────────────────────────────────────┘
+                              │
+                    5. Validate Signature
+                              │
+                    6. Check Nonce Uniqueness ◄───┐
+                              │                   │
+                    7. Is Nonce Duplicate? ──► Yes ──► 8. Reject Request
+                              │                   │         (Replay Attack)
+                             No                  │         Log to security_rejects.log
+                              │                   │
+                    8. Process Request           │
+                              │                   │
+                    9. Store Nonce ──────────────┘
+                              │
+                   10. Return Response
+                              │
+                    ┌─────────▼───────────┐
+                    │   Client/System     │
+                    └─────────────────────┘
+
+Key Components:
+- Nonce Cache: security/nonce_cache.json (max 5000 entries)
+- Security Logs: logs/security_rejects.log
+- Signature Verification: RSA-PKCS1v15 with SHA256
+- JWT Authentication: Role-based access control
+```
+
 ### Provenance Hash-Chain
 - SHA256-based immutable audit trail
 - Stored in `logs/provenance_chain.jsonl`
