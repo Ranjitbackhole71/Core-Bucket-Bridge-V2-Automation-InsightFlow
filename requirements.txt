@@ -4,3 +4,5 @@ streamlit
 pytest
 requests
 pandas
+PyJWT==2.8.0
+
