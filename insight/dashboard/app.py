@@ -13,6 +13,17 @@ st.set_page_config(
     layout="wide"
 )
 
+# Define module colors
+MODULE_COLORS = {
+    "education": "#FFA500",  # Orange
+    "finance": "#0000FF",    # Blue
+    "creative": "#FFC0CB",   # Pink
+    "robotics": "#808080",  # Gray
+    "live-rule": "#800080", # Purple
+    "backend-pipeline": "#0000FF", # Blue
+    "dashboard": "#008000"   # Green
+}
+
 # Title
 st.title("📊 InsightFlow Dashboard")
 st.markdown("Real-time monitoring of Core-Bucket data synchronization")
@@ -120,6 +131,45 @@ def get_health_data():
         pass
     return None
 
+# Function to filter data by time
+def filter_data_by_time(data, time_filter):
+    if not data or time_filter == "All time":
+        return data
+    
+    # Calculate time threshold
+    from datetime import datetime, timedelta
+    now = datetime.utcnow()
+    
+    if time_filter == "Last 1 hour":
+        threshold = now - timedelta(hours=1)
+    elif time_filter == "Last 6 hours":
+        threshold = now - timedelta(hours=6)
+    elif time_filter == "Last 24 hours":
+        threshold = now - timedelta(hours=24)
+    else:
+        return data
+    
+    # Filter data
+    filtered_data = []
+    for entry in data:
+        timestamp_str = entry.get("timestamp", "")
+        if timestamp_str:
+            try:
+                # Handle different timestamp formats
+                if "T" in timestamp_str:
+                    timestamp = datetime.fromisoformat(timestamp_str.replace("Z", "+00:00"))
+                else:
+                    # Assume it's a readable timestamp string
+                    continue
+                
+                if timestamp >= threshold:
+                    filtered_data.append(entry)
+            except Exception:
+                # If we can't parse the timestamp, include the entry
+                filtered_data.append(entry)
+    
+    return filtered_data
+
 # Function to calculate metrics
 def calculate_metrics(flow_data, metrics_data):
     if not flow_data:
@@ -156,6 +206,13 @@ def calculate_metrics(flow_data, metrics_data):
 if "refresh_counter" not in st.session_state:
     st.session_state.refresh_counter = 0
 
+# Time filter
+time_filter = st.selectbox(
+    "Time Filter",
+    ["Last 1 hour", "Last 6 hours", "Last 24 hours", "All time"],
+    index=2  # Default to Last 24 hours
+)
+
 # Refresh button
 if st.button("🔄 Refresh Data"):
     st.session_state.refresh_counter += 1
@@ -187,8 +244,15 @@ provenance_data = read_provenance_chain()
 # Read plugin errors data
 plugin_errors_data = read_plugin_errors()
 
+# Filter data based on time selection
+filtered_flow_data = filter_data_by_time(flow_data, time_filter)
+filtered_security_rejects_data = filter_data_by_time(security_rejects_data, time_filter)
+filtered_heartbeat_data = filter_data_by_time(heartbeat_data, time_filter)
+filtered_provenance_data = filter_data_by_time(provenance_data, time_filter)
+filtered_plugin_errors_data = filter_data_by_time(plugin_errors_data, time_filter)
+
 # Calculate metrics
-success_rate, avg_latency, error_count, queue_depth, last_sync_times, overall_last_sync = calculate_metrics(flow_data, metrics_data)
+success_rate, avg_latency, error_count, queue_depth, last_sync_times, overall_last_sync = calculate_metrics(filtered_flow_data, metrics_data)
 
 # Display metrics
 with col1:
@@ -223,9 +287,22 @@ else:
 
 # Security Events Panel
 st.subheader("🔒 Security Events")
-if security_rejects_data:
+col1, col2, col3 = st.columns(3)
+
+# Get security metrics from health data
+signature_rejects = health_data.get("security", {}).get("signature_rejects_24h", 0) if health_data else 0
+replay_attempts = health_data.get("security", {}).get("replay_rejects_24h", 0) if health_data else 0
+
+with col1:
+    st.metric("Signature Rejects", signature_rejects)
+with col2:
+    st.metric("Replay Attempts", replay_attempts)
+with col3:
+    st.metric("Security Status", "OK" if signature_rejects == 0 and replay_attempts == 0 else "WARN")
+
+if filtered_security_rejects_data:
     # Convert to DataFrame for better display
-    df = pd.DataFrame(security_rejects_data)
+    df = pd.DataFrame(filtered_security_rejects_data)
     # Sort by timestamp (newest first)
     if 'timestamp' in df.columns:
         df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
@@ -259,37 +336,60 @@ if plugin_errors_data:
 else:
     st.info("No plugin errors recorded yet.")
 
-# Show heartbeat events
-st.markdown("**Heartbeat Events:**")
-if heartbeat_data:
+# Heartbeat Timeline
+st.subheader("💓 Heartbeat Timeline")
+if filtered_heartbeat_data:
     # Convert to DataFrame for better display
-    df = pd.DataFrame(heartbeat_data)
+    df = pd.DataFrame(filtered_heartbeat_data)
     # Sort by timestamp (newest first)
     if 'timestamp' in df.columns:
         df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
         df = df.sort_values('timestamp', ascending=False)
     
-    # Display table
-    st.dataframe(df.head(10), width='stretch')  # Show only last 10 events
+    # Display timeline
+    for _, row in df.head(10).iterrows():
+        module = row.get('module', 'unknown')
+        timestamp = row.get('timestamp', '')
+        status = row.get('status', 'unknown')
+        color = MODULE_COLORS.get(module, '#000000')
+        
+        # Color-code based on status
+        if status == 'alive':
+            status_icon = '🟢'
+        elif status == 'warning':
+            status_icon = '🟡'
+        else:
+            status_icon = '🔴'
+        
+        st.markdown(f"<div style='padding: 5px; border-left: 5px solid {color}; margin: 5px 0;'>"
+                   f"<strong>{module}</strong> - {timestamp} - {status_icon} {status}</div>", 
+                   unsafe_allow_html=True)
 else:
     st.info("No heartbeat events recorded yet.")
 
-# Show provenance chain
-st.markdown("**Provenance Chain Entries:**")
-if provenance_data:
+# Provenance Chain Viewer
+st.subheader("🔗 Provenance Chain Viewer")
+if filtered_provenance_data:
     # Convert to DataFrame for better display
-    df = pd.DataFrame(provenance_data)
+    df = pd.DataFrame(filtered_provenance_data)
     # Sort by timestamp (newest first)
     if 'timestamp' in df.columns:
         df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
         df = df.sort_values('timestamp', ascending=False)
     
-    # Display table with limited columns for better readability
-    if 'hash' in df.columns and 'timestamp' in df.columns:
-        display_df = df[['timestamp', 'hash']].head(10)  # Show only last 10 entries
-        st.dataframe(display_df, width='stretch')
-    else:
-        st.dataframe(df.head(10), width='stretch')
+    # Display scrollable chain
+    st.markdown("<div style='height: 300px; overflow-y: scroll; border: 1px solid #ddd; padding: 10px;'>", unsafe_allow_html=True)
+    for _, row in df.iterrows():
+        timestamp = row.get('timestamp', '')
+        hash_value = row.get('hash', '')[:16] + '...' if row.get('hash', '') else 'N/A'
+        prev_hash = row.get('previous_hash', '')[:16] + '...' if row.get('previous_hash', '') else 'N/A'
+        
+        st.markdown(f"<div style='margin: 5px 0; padding: 5px; border-bottom: 1px solid #eee;'>"
+                   f"<strong>{timestamp}</strong><br/>"
+                   f"Hash: {hash_value}<br/>"
+                   f"Previous: {prev_hash}</div>", 
+                   unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
 else:
     st.info("No provenance chain entries recorded yet.")
 

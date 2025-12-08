@@ -1,0 +1,16 @@
+[Unit]
+Description=Core-Bucket Bridge Automation Runner Service
+After=network.target
+
+[Service]
+Type=simple
+User=corebridge
+WorkingDirectory=/opt/core-bucket-bridge
+ExecStart=/usr/bin/python3 /opt/core-bucket-bridge/automation/runner.py --watch --interval 30
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
