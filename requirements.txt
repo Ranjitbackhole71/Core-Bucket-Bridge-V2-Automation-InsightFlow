@@ -1,8 +1,3 @@
 fastapi
 uvicorn
-streamlit
-pytest
 requests
-pandas
-PyJWT==2.8.0
-cryptography==46.0.3
