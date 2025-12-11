@@ -3,68 +3,31 @@ name: CI / Build / Deploy
 on:
   push:
     branches: [ main ]
-    tags:
-      - 'v*'
   pull_request:
     branches: [ main ]
 
-concurrency:
-  group: land-utilization-rl-${{ github.ref }}
-  cancel-in-progress: true
-
 env:
-  PYTHON_VERSION: '3.10'
   IMAGE_NAME: land-utilization-rl
+  PYTHON_VERSION: "3.10"
 
 jobs:
   test:
-    name: Run tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Run pytest
-        run: |
-          pytest -q
+      - run: pip install -r requirements.txt
+      - run: pytest -q
 
   build-and-push:
-    name: Build and push container
     needs: test
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-
-      - name: Set up buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Login to registry
-        run: |
-          if [ -n "${{ secrets.GHCR_PAT }}" ]; then
-            echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          elif [ -n "${{ secrets.DOCKERHUB_USERNAME }}" ]; then
-            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
-          else
-            echo "No registry credentials detected; build only (skip push)."
-          fi
-
+      - uses: actions/checkout@v4
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - name: Build and push image
         uses: docker/build-push-action@v4
         with:
@@ -72,43 +35,19 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-  upload-model:
-    name: Save model/artifacts
-    needs: build-and-push
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Package artifacts
-        run: |
-          mkdir -p artifacts
-          echo "stub-model-file" > artifacts/model.txt
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: model-artifacts
-          path: artifacts
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
   deploy-render:
-    name: Trigger deploy on Render
     needs: build-and-push
     runs-on: ubuntu-latest
     if: ${{ secrets.RENDER_API_KEY != '' && secrets.RENDER_SERVICE_ID != '' }}
     steps:
-      - name: Trigger Render deploy via API
+      - name: Trigger Render deployment
         run: |
-          echo "Triggering Render deploy for service id: ${{ secrets.RENDER_SERVICE_ID }}"
-          response="$(curl -s -o /tmp/render_resp.json -w "%{http_code}" -X POST \
-            -H "Accept: application/json" \
-            -H "Content-Type: application/json" \
+          echo "Triggering Deploy..."
+          curl -X POST \
             -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
             -d '{"clearCache":true}' \
-            "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys")"
-          echo "Render API HTTP status: $response"
-          echo "Render response body:"
-          cat /tmp/render_resp.json || true
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
