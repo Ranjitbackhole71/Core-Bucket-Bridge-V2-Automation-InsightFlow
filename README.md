@@ -411,6 +411,32 @@ This workflow ensures that even if an attacker intercepts a valid signed request
 
 ## 🧪 Testing
 
+### Automated Localhost Testing
+
+For a comprehensive test of all system functionality, use the provided localhost test scripts:
+
+**Windows:**
+```cmd
+run_localhost_test.bat
+```
+
+**macOS/Linux:**
+```bash
+chmod +x run_localhost_test.sh
+./run_localhost_test.sh
+```
+
+This will automatically:
+- Verify system requirements
+- Install missing dependencies
+- Generate RSA keys if needed
+- Start all services (FastAPI, Streamlit)
+- Run automation tests
+- Verify logs and reports
+- Provide access information
+
+See [LOCALHOST_TEST_README.md](LOCALHOST_TEST_README.md) for detailed instructions.
+
 ### Security Tests
 ```bash
 python test_security.py
