@@ -1,0 +1,24 @@
+Test: test_valid_request.py
+Return Code: 0
+Stdout:
+============================================================
+CORE-BUCKET BRIDGE V5 - VALID REQUEST SIMULATION TEST
+============================================================
+Testing valid request simulation...
+[SUCCESS] Valid request test PASSED - Status: 200
+[SUCCESS] Data logged to core_sync.log: 2026-02-07 11:52:36,797 - {"module": "education", "session_id": "722128aa-4110-4cae-8b79-9a1fc6f79b6...
+[SUCCESS] Metrics recorded: {"timestamp": "2026-02-07T06:22:36.795401Z", "endpoint": "/core/update", "module": "education", "sta...
+[SUCCESS] Provenance chain entry added: {"hash": "0ed5ee4109bc42077bdfede76d7b197d1b3cb9de0b0754a4e9ecc788aaa81b66", "previous_hash": "", "p...
+============================================================
+VALID REQUEST SIMULATION: [PASSED]
+============================================================
+
+Stderr:
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_valid_request.py:36: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z"
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_valid_request.py:66: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "exp": (datetime.utcnow() + timedelta(hours=24)).timestamp(),  # 24 hours to be sure
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_valid_request.py:68: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "iat": datetime.utcnow().timestamp()
+
+Timestamp: 2026-02-07 11:52:36

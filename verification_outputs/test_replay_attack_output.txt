@@ -1,0 +1,25 @@
+Test: test_replay_attack.py
+Return Code: 0
+Stdout:
+============================================================
+CORE-BUCKET BRIDGE V5 - REPLAY ATTACK SIMULATION TEST
+============================================================
+Testing replay attack simulation...
+Sending first request (should succeed)...
+[SUCCESS] First request succeeded (Status: 200)
+Sending second request with same nonce (should be rejected as replay attack)...
+[SUCCESS] Replay attack test PASSED - Second request properly rejected (Status: 500)
+[SUCCESS] Replay attack detected in security logs: 2026-02-07 11:52:44,076 - Replay attack detected...
+============================================================
+REPLAY ATTACK SIMULATION: [PASSED]
+============================================================
+
+Stderr:
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_replay_attack.py:36: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z"
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_replay_attack.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "exp": (datetime.utcnow() + timedelta(hours=24)).timestamp(),  # 24 hours to be sure
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_replay_attack.py:71: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "iat": datetime.utcnow().timestamp()
+
+Timestamp: 2026-02-07 11:52:44

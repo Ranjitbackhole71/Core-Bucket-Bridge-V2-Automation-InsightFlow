@@ -1,0 +1,24 @@
+Test: test_heartbeat.py
+Return Code: 0
+Stdout:
+============================================================
+CORE-BUCKET BRIDGE V5 - HEARTBEAT SIMULATION TEST
+============================================================
+Testing heartbeat simulation...
+[SUCCESS] Heartbeat test PASSED - Status: 200
+[SUCCESS] Heartbeat logged: 2026-02-07 11:52:46,566 - {"module": "automation", "timestamp": "2026-02-07T06:22:46.566198Z", "stat...
+[SUCCESS] Heartbeat also in core_sync.log: 2026-02-07 11:52:46,566 - {"module": "automation", "timestamp": "2026-02-07T06:22:46.566198Z", "stat...
+[SUCCESS] Metrics updated: {"timestamp": "2026-02-07T06:22:46.566198Z", "endpoint": "/core/heartbeat", "module": "automation", ...
+============================================================
+HEARTBEAT SIMULATION: [PASSED]
+============================================================
+
+Stderr:
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_heartbeat.py:32: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z",
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_heartbeat.py:67: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "exp": (datetime.utcnow() + timedelta(hours=24)).timestamp(),  # 24 hours to be sure
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_heartbeat.py:69: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "iat": datetime.utcnow().timestamp()
+
+Timestamp: 2026-02-07 11:52:46

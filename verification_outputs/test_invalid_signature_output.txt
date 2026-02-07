@@ -1,0 +1,22 @@
+Test: test_invalid_signature.py
+Return Code: 0
+Stdout:
+============================================================
+CORE-BUCKET BRIDGE V5 - INVALID SIGNATURE SIMULATION TEST
+============================================================
+Testing invalid signature simulation...
+[FAILED] Invalid signature test FAILED - Request was accepted when it should have been rejected (Status: 500)
+   Response: Internal Server Error
+============================================================
+INVALID SIGNATURE SIMULATION: [FAILED]
+============================================================
+
+Stderr:
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_invalid_signature.py:36: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "timestamp": datetime.utcnow().isoformat() + "Z"
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_invalid_signature.py:70: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "exp": (datetime.utcnow() + timedelta(hours=24)).timestamp(),  # 24 hours to be sure
+C:\Users\Ranjit\OneDrive\Desktop\Core-Bucket-Bridge-V2-Automation-InsightFlow\test_invalid_signature.py:72: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  "iat": datetime.utcnow().timestamp()
+
+Timestamp: 2026-02-07 11:52:39

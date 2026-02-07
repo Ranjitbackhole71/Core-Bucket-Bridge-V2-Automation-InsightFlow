@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Test script for heartbeat simulation in go-live testing.
-Verifies that the system properly handles module health monitoring.
+Test script for valid request simulation in go-live testing.
+Verifies that the system accepts valid signed requests.
 """
 
 import requests
@@ -14,9 +14,9 @@ from cryptography.hazmat.primitives.asymmetric import padding
 import jwt
 
 
-def test_heartbeat():
-    """Test that the system properly handles heartbeat requests."""
-    print("Testing heartbeat simulation...")
+def test_valid_request():
+    """Test that the system accepts valid signed requests."""
+    print("Testing valid request simulation...")
     
     # Load private key for signing
     try:
@@ -26,22 +26,21 @@ def test_heartbeat():
         print("ERROR: security/private.pem not found")
         return False
     
-    # Prepare heartbeat payload
-    heartbeat_payload = {
-        "module": "automation",
-        "timestamp": datetime.utcnow().isoformat() + "Z",
-        "status": "alive",
-        "metrics": {
-            "cpu": 45,
-            "memory": 128,
-            "uptime": 3600,
-            "jobs_executed": 10
-        }
+    # Prepare valid payload
+    payload = {
+        "module": "education",
+        "data": {
+            "student_id": f"STU{uuid.uuid4().hex[:6].upper()}",
+            "course_id": "CS101",
+            "course_name": "Introduction to Computer Science",
+            "timestamp": datetime.utcnow().isoformat() + "Z"
+        },
+        "session_id": str(uuid.uuid4())
     }
     
     # Sign the payload
     try:
-        payload_bytes = json.dumps(heartbeat_payload, sort_keys=True).encode('utf-8')
+        payload_bytes = json.dumps(payload, sort_keys=True).encode('utf-8')
         signature = private_key.sign(
             payload_bytes,
             padding.PKCS1v15(),
@@ -49,12 +48,12 @@ def test_heartbeat():
         )
         signature_b64 = base64.b64encode(signature).decode('utf-8')
     except Exception as e:
-        print(f"ERROR: Failed to sign heartbeat payload: {e}")
+        print(f"ERROR: Failed to sign payload: {e}")
         return False
     
     # Create secure payload with nonce
     secure_payload = {
-        "payload": heartbeat_payload,
+        "payload": payload,
         "signature": signature_b64,
         "nonce": str(uuid.uuid4())
     }
@@ -75,8 +74,8 @@ def test_heartbeat():
         print(f"ERROR: Failed to create JWT token: {e}")
         return False
     
-    # Send request to core heartbeat endpoint
-    url = "http://localhost:8000/core/heartbeat"
+    # Send request to core update endpoint
+    url = "http://localhost:8000/core/update"
     headers = {
         "Authorization": auth_header,
         "Content-Type": "application/json"
@@ -86,40 +85,36 @@ def test_heartbeat():
         response = requests.post(url, json=secure_payload, headers=headers, timeout=30)
         
         if response.status_code == 200:
-            print(f"[SUCCESS] Heartbeat test PASSED - Status: {response.status_code}")
+            print(f"[SUCCESS] Valid request test PASSED - Status: {response.status_code}")
             
-            # Check heartbeat logs
-            try:
-                with open("logs/heartbeat.log", "r") as f:
-                    lines = f.readlines()
-                    if lines:
-                        print(f"[SUCCESS] Heartbeat logged: {lines[-1][:100]}...")
-                    else:
-                        print("[WARNING] Heartbeat log is empty")
-            except FileNotFoundError:
-                print("[WARNING] heartbeat.log not found - may not be running yet")
-            
-            # Check core sync logs (heartbeats also get logged there)
+            # Check logs for successful entry
             try:
                 with open("logs/core_sync.log", "r") as f:
                     lines = f.readlines()
                     if lines:
-                        print(f"[SUCCESS] Heartbeat also in core_sync.log: {lines[-1][:100]}...")
+                        print(f"[SUCCESS] Data logged to core_sync.log: {lines[-1][:100]}...")
             except FileNotFoundError:
                 print("[WARNING] core_sync.log not found - may not be running yet")
             
-            # Check metrics updates
             try:
                 with open("logs/metrics.jsonl", "r") as f:
                     lines = f.readlines()
                     if lines:
-                        print(f"[SUCCESS] Metrics updated: {lines[-1][:100]}...")
+                        print(f"[SUCCESS] Metrics recorded: {lines[-1][:100]}...")
             except FileNotFoundError:
                 print("[WARNING] metrics.jsonl not found - may not be running yet")
             
+            try:
+                with open("logs/provenance_chain.jsonl", "r") as f:
+                    lines = f.readlines()
+                    if lines:
+                        print(f"[SUCCESS] Provenance chain entry added: {lines[-1][:100]}...")
+            except FileNotFoundError:
+                print("[WARNING] provenance_chain.jsonl not found - may not be running yet")
+                
             return True
         else:
-            print(f"[FAILED] Heartbeat test FAILED - Status: {response.status_code}, Response: {response.text}")
+            print(f"[FAILED] Valid request test FAILED - Status: {response.status_code}, Response: {response.text}")
             return False
             
     except requests.exceptions.ConnectionError:
@@ -127,20 +122,20 @@ def test_heartbeat():
         print("   To run the service: python core_bucket_bridge.py")
         return False
     except Exception as e:
-        print(f"[FAILED] Heartbeat test FAILED with exception: {e}")
+        print(f"[FAILED] Valid request test FAILED with exception: {e}")
         return False
 
 
 if __name__ == "__main__":
     print("="*60)
-    print("CORE-BUCKET BRIDGE V5 - HEARTBEAT SIMULATION TEST")
+    print("CORE-BUCKET BRIDGE V5 - VALID REQUEST SIMULATION TEST")
     print("="*60)
     
-    success = test_heartbeat()
+    success = test_valid_request()
     
     print("="*60)
     if success:
-        print("HEARTBEAT SIMULATION: [PASSED]")
+        print("VALID REQUEST SIMULATION: [PASSED]")
     else:
-        print("HEARTBEAT SIMULATION: [FAILED]")
+        print("VALID REQUEST SIMULATION: [FAILED]")
     print("="*60)
