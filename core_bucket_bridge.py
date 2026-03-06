@@ -13,6 +13,14 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 import base64
 import hashlib
+from admission_layer import (
+    RegistryValidator,
+    CanonicalHasher,
+    ImmutableAdmissionLogger,
+    ContractValidator,
+    SilentMutationAuditor,
+    ReplayVerifier
+)
 
 # Initialize FastAPI app
 app = FastAPI(title="Core-Bucket Data Bridge", 
@@ -52,6 +60,14 @@ heartbeat_handler = RotatingFileHandler("logs/heartbeat.log", maxBytes=1000000, 
 heartbeat_formatter = logging.Formatter('%(asctime)s - %(message)s')
 heartbeat_handler.setFormatter(heartbeat_formatter)
 heartbeat_logger.addHandler(heartbeat_handler)
+
+# Initialize admission layer components
+registry_validator = RegistryValidator()
+canonical_hasher = CanonicalHasher()
+admission_logger = ImmutableAdmissionLogger()
+contract_validator = ContractValidator(registry_validator)
+mutation_auditor = SilentMutationAuditor()
+replay_verifier = ReplayVerifier(admission_logger)
 
 # Health monitoring variables
 start_time = time.time()
@@ -127,10 +143,21 @@ class HealthResponse(BaseModel):
     error_count_24h: int
     avg_latency_ms_24h: float
     security: SecurityMetrics
+    structural_hardening: Optional[Dict[str, Any]] = None
 
 class RejectionResponse(BaseModel):
     status: str
     reason: str
+
+class ReplayVerificationResponse(BaseModel):
+    verified: bool
+    input_hash: str
+    original_decision: Optional[Dict[str, Any]] = None
+    error_message: Optional[str] = None
+
+class AuditReportResponse(BaseModel):
+    audit_trail: list
+    total_audits: int
 
 # Role-based access control
 def verify_jwt_token_with_role(required_role: str = None):
@@ -334,30 +361,109 @@ def add_to_provenance_chain(payload: Dict[str, Any], timestamp: str):
 async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depends(requires_role("module"))):
     """
     Receives heartbeat from modules/plugins with signature verification, JWT authentication, and anti-replay protection.
+    Implements structural hardening with registry alignment, contract enforcement, and immutable logging.
     """
     global pending_queue, latencies, last_valid_signature_timestamps
+    timestamp = datetime.utcnow().isoformat() + "Z"
+    
     try:
+        # Capture original payload for mutation audit
+        original_hash = mutation_auditor.capture_original(secure_payload.payload)
+        
         # Check nonce for anti-replay protection
         if secure_payload.nonce and not check_nonce(secure_payload.nonce):
             security_logger.info("Replay attack detected in heartbeat")
+            # Log rejection to admission logger
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=secure_payload.payload.get("module", "unknown"),
+                input_hash=input_hash,
+                registry_version="1.0.0",
+                decision="REJECTED",
+                rule_id="REPLAY_PROTECTION",
+                timestamp=timestamp
+            )
             raise HTTPException(status_code=401, detail="Replay attack detected")
         
         # Verify signature
         if not verify_signature(secure_payload.payload, secure_payload.signature):
             security_logger.info("Invalid signature for /core/heartbeat")
+            # Log rejection to admission logger
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=secure_payload.payload.get("module", "unknown"),
+                input_hash=input_hash,
+                registry_version="1.0.0",
+                decision="REJECTED",
+                rule_id="SIGNATURE_VERIFICATION",
+                timestamp=timestamp
+            )
             return RejectionResponse(status="rejected", reason="invalid_signature")
         
         # Extract payload data
         payload = HeartbeatPayload(**secure_payload.payload)
         
-        # Get current timestamp
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        # STEP 1: Registry Alignment
+        is_registered, schema_version = registry_validator.verify_module_registered(payload.module)
+        if not is_registered:
+            security_logger.info(f"Module not registered: {payload.module}")
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version="N/A",
+                decision="REJECTED",
+                rule_id="MODULE_NOT_REGISTERED",
+                timestamp=timestamp
+            )
+            raise HTTPException(status_code=400, detail=f"Module not registered: {payload.module}")
+        
+        # STEP 2: Contract Enforcement - Strict schema validation
+        is_valid, error_msg, rule_id = contract_validator.validate_contract("core/heartbeat", secure_payload.payload)
+        if not is_valid:
+            security_logger.info(f"Contract validation failed: {error_msg}")
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version=schema_version,
+                decision="REJECTED",
+                rule_id=rule_id,
+                timestamp=timestamp
+            )
+            raise HTTPException(status_code=400, detail=error_msg)
+        
+        # Compute input hash for accepted request
+        input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
         
         # Add to provenance chain
         provenance_hash = add_to_provenance_chain(secure_payload.payload, timestamp)
         
         # Update last valid signature timestamp for this module
         last_valid_signature_timestamps[payload.module] = timestamp
+        
+        # STEP 3: Immutable Admission Logging - Log acceptance decision
+        admission_logger.log_decision(
+            module_id=payload.module,
+            input_hash=input_hash,
+            registry_version=schema_version,
+            decision="ACCEPTED",
+            rule_id=rule_id,
+            timestamp=timestamp
+        )
+        
+        # STEP 5: Silent Mutation Audit - Verify no mutation during processing
+        if not mutation_auditor.verify_no_mutation(original_hash, secure_payload.payload):
+            security_logger.info("Payload mutation detected in heartbeat processing")
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version=schema_version,
+                decision="REJECTED",
+                rule_id="PAYLOAD_MUTATION_DETECTED",
+                timestamp=timestamp
+            )
+            raise HTTPException(status_code=500, detail="Payload integrity violation")
         
         # Log the heartbeat to both sync logger and dedicated heartbeat logger
         log_entry = {
@@ -388,7 +494,9 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
             "endpoint": "/core/heartbeat",
             "module": payload.module,
             "status": "success",
-            "provenance_hash": provenance_hash
+            "provenance_hash": provenance_hash,
+            "input_hash": input_hash,
+            "registry_version": schema_version
         }
         metrics_logger.info(json.dumps(metrics_entry))
         
@@ -399,6 +507,8 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
             message=f"Heartbeat received and logged for module {payload.module}"
         )
         
+    except HTTPException:
+        raise
     except Exception as e:
         global error_count_24h
         error_count_24h += 1
@@ -408,24 +518,80 @@ async def core_heartbeat(secure_payload: SecurePayload, token_data: dict = Depen
 async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(requires_role("module"))):
     """
     Receives JSON data from Core with signature verification, JWT authentication, and anti-replay protection.
+    Implements structural hardening with registry alignment, contract enforcement, and immutable logging.
     """
     global pending_queue, latencies
+    timestamp = datetime.utcnow().isoformat() + "Z"
+    
     try:
+        # Capture original payload for mutation audit
+        original_hash = mutation_auditor.capture_original(secure_payload.payload)
+        
         # Check nonce for anti-replay protection
         if secure_payload.nonce and not check_nonce(secure_payload.nonce):
             security_logger.info("Replay attack detected")
+            # Log rejection to admission logger
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=secure_payload.payload.get("module", "unknown"),
+                input_hash=input_hash,
+                registry_version="1.0.0",
+                decision="REJECTED",
+                rule_id="REPLAY_PROTECTION",
+                timestamp=timestamp
+            )
             raise HTTPException(status_code=401, detail="Replay attack detected")
         
         # Verify signature
         if not verify_signature(secure_payload.payload, secure_payload.signature):
             security_logger.info("Invalid signature for /core/update")
+            # Log rejection to admission logger
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=secure_payload.payload.get("module", "unknown"),
+                input_hash=input_hash,
+                registry_version="1.0.0",
+                decision="REJECTED",
+                rule_id="SIGNATURE_VERIFICATION",
+                timestamp=timestamp
+            )
             return RejectionResponse(status="rejected", reason="invalid_signature")
         
         # Extract payload data
         payload = CoreUpdatePayload(**secure_payload.payload)
         
-        # Get current timestamp
-        timestamp = datetime.utcnow().isoformat() + "Z"
+        # STEP 1: Registry Alignment
+        is_registered, schema_version = registry_validator.verify_module_registered(payload.module)
+        if not is_registered:
+            security_logger.info(f"Module not registered: {payload.module}")
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version="N/A",
+                decision="REJECTED",
+                rule_id="MODULE_NOT_REGISTERED",
+                timestamp=timestamp
+            )
+            raise HTTPException(status_code=400, detail=f"Module not registered: {payload.module}")
+        
+        # STEP 2: Contract Enforcement - Strict schema validation
+        is_valid, error_msg, rule_id = contract_validator.validate_contract("core/update", secure_payload.payload)
+        if not is_valid:
+            security_logger.info(f"Contract validation failed: {error_msg}")
+            input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version=schema_version,
+                decision="REJECTED",
+                rule_id=rule_id,
+                timestamp=timestamp
+            )
+            raise HTTPException(status_code=400, detail=error_msg)
+        
+        # Compute input hash for accepted request
+        input_hash = canonical_hasher.compute_input_hash(secure_payload.payload)
         
         # Add to provenance chain
         add_to_provenance_chain(secure_payload.payload, timestamp)
@@ -433,6 +599,30 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
         pending_queue += 1
         # Generate session ID if not provided
         session_id = payload.session_id or str(uuid.uuid4())
+        
+        # STEP 3: Immutable Admission Logging - Log acceptance decision
+        admission_logger.log_decision(
+            module_id=payload.module,
+            input_hash=input_hash,
+            registry_version=schema_version,
+            decision="ACCEPTED",
+            rule_id=rule_id,
+            timestamp=timestamp
+        )
+        
+        # STEP 5: Silent Mutation Audit - Verify no mutation during processing
+        if not mutation_auditor.verify_no_mutation(original_hash, secure_payload.payload):
+            security_logger.info("Payload mutation detected in update processing")
+            admission_logger.log_decision(
+                module_id=payload.module,
+                input_hash=input_hash,
+                registry_version=schema_version,
+                decision="REJECTED",
+                rule_id="PAYLOAD_MUTATION_DETECTED",
+                timestamp=timestamp
+            )
+            pending_queue -= 1
+            raise HTTPException(status_code=500, detail="Payload integrity violation")
         
         # Log the data
         log_entry = {
@@ -482,14 +672,16 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
         with open("insight/flow.log", "a") as f:
             f.write(json.dumps(insight_hook_entry) + "\n")
             
-        # Log metrics
+        # Log metrics with structural hardening info
         metrics_entry = {
             "timestamp": timestamp,
             "endpoint": "/core/update",
             "module": payload.module,
             "status": "success",
             "latency_ms": latency,
-            "pending_queue": pending_queue
+            "pending_queue": pending_queue,
+            "input_hash": input_hash,
+            "registry_version": schema_version
         }
         metrics_logger.info(json.dumps(metrics_entry))
         
@@ -502,6 +694,8 @@ async def core_update(secure_payload: SecurePayload, token_data: dict = Depends(
             message=f"Data received and logged for module {payload.module}"
         )
         
+    except HTTPException:
+        raise
     except Exception as e:
         global error_count_24h
         error_count_24h += 1
@@ -522,7 +716,7 @@ async def bucket_status(token_data: dict = Depends(requires_role("module"))):
 @app.get("/core/health", response_model=HealthResponse)
 async def core_health():
     """
-    Returns health metrics for the Core-Bucket bridge including security metrics.
+    Returns health metrics for the Core-Bucket bridge including security metrics and structural hardening status.
     """
     uptime = time.time() - start_time
     avg_latency = sum(latencies) / len(latencies) if latencies else 0.0
@@ -540,6 +734,15 @@ async def core_health():
     }
     metrics_logger.info(json.dumps(metrics_entry))
     
+    # Get admission decision statistics
+    recent_decisions = admission_logger.get_decisions(limit=100)
+    accepted_count = sum(1 for d in recent_decisions if d.get("decision") == "ACCEPTED")
+    rejected_count = sum(1 for d in recent_decisions if d.get("decision") == "REJECTED")
+    
+    # Get mutation audit statistics
+    audit_trail = mutation_auditor.get_audit_report()
+    mutation_violations = sum(1 for a in audit_trail if a.get("mutated") == True)
+    
     return HealthResponse(
         status="ok",
         uptime_s=uptime,
@@ -552,7 +755,16 @@ async def core_health():
             replay_rejects_24h=replay_attempts,
             last_valid_signature_ts=last_valid_signature_timestamps,
             last_nonce=last_nonce
-        )
+        ),
+        structural_hardening={
+            "registry_loaded": registry_validator._registry_cache is not None,
+            "total_admission_decisions": len(recent_decisions),
+            "accepted_decisions": accepted_count,
+            "rejected_decisions": rejected_count,
+            "mutation_audits_performed": len(audit_trail),
+            "mutation_violations": mutation_violations,
+            "contract_enforcement_active": True
+        }
     )
 
 # Create insight directory if it doesn't exist
@@ -563,6 +775,49 @@ flow_log_path = "insight/flow.log"
 if not os.path.exists(flow_log_path):
     with open(flow_log_path, "w") as f:
         pass  # Create empty file
+
+@app.post("/verify/replay", response_model=ReplayVerificationResponse)
+async def verify_replay(input_hash: str, token_data: dict = Depends(requires_role("module"))):
+    """
+    STEP 4: Replay Verification Engine
+    
+    Verifies that replay produces identical verdict.
+    
+    Verification rules:
+    - input_hash identical
+    - decision identical
+    - rule_id identical
+    """
+    verified, original_decision, error_message = replay_verifier.verify_replay(input_hash)
+    
+    return ReplayVerificationResponse(
+        verified=verified,
+        input_hash=input_hash,
+        original_decision=original_decision,
+        error_message=error_message
+    )
+
+@app.get("/audit/report", response_model=AuditReportResponse)
+async def get_audit_report(token_data: dict = Depends(requires_role("admin"))):
+    """
+    STEP 5: Silent Mutation Audit Report
+    
+    Returns complete audit trail for payload mutation detection.
+    """
+    audit_trail = mutation_auditor.get_audit_report()
+    
+    return AuditReportResponse(
+        audit_trail=audit_trail,
+        total_audits=len(audit_trail)
+    )
+
+@app.get("/admission/decisions")
+async def get_admission_decisions(limit: int = 100, token_data: dict = Depends(requires_role("admin"))):
+    """
+    Get recent admission decisions (read-only).
+    """
+    decisions = admission_logger.get_decisions(limit=limit)
+    return {"decisions": decisions, "count": len(decisions)}
 
 if __name__ == "__main__":
     import uvicorn

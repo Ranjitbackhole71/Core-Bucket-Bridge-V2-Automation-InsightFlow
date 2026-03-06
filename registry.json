@@ -1,0 +1,65 @@
+{
+  "modules": {
+    "education": {
+      "schema_version": "1.0.0",
+      "description": "Education module for course management",
+      "required_fields": ["course_id", "course_name"],
+      "optional_fields": ["students_enrolled", "instructor"]
+    },
+    "finance": {
+      "schema_version": "1.0.0",
+      "description": "Finance module for account management",
+      "required_fields": ["account_id", "balance", "currency"],
+      "optional_fields": ["last_transaction"]
+    },
+    "creative": {
+      "schema_version": "1.0.0",
+      "description": "Creative module for project management",
+      "required_fields": ["project_id", "project_name", "status"],
+      "optional_fields": ["deadline"]
+    },
+    "robotics": {
+      "schema_version": "1.0.0",
+      "description": "Robotics module for robot status tracking",
+      "required_fields": ["robot_id", "status"],
+      "optional_fields": ["battery_level", "last_maintenance"]
+    },
+    "automation": {
+      "schema_version": "1.0.0",
+      "description": "Automation module for heartbeat and monitoring",
+      "required_fields": ["module", "timestamp", "status"],
+      "optional_fields": ["metrics"]
+    }
+  },
+  "schema_definitions": {
+    "core/update": {
+      "version": "1.0.0",
+      "required_fields": ["module", "data"],
+      "field_types": {
+        "module": "string",
+        "data": "object",
+        "session_id": "string"
+      }
+    },
+    "core/heartbeat": {
+      "version": "1.0.0",
+      "required_fields": ["module", "timestamp", "status"],
+      "field_types": {
+        "module": "string",
+        "timestamp": "string",
+        "status": "string",
+        "metrics": "object"
+      }
+    },
+    "core/health": {
+      "version": "1.0.0",
+      "required_fields": [],
+      "field_types": {}
+    },
+    "bucket/status": {
+      "version": "1.0.0",
+      "required_fields": [],
+      "field_types": {}
+    }
+  }
+}
