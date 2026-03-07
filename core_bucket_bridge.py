@@ -53,6 +53,14 @@ security_formatter = logging.Formatter('%(asctime)s - %(message)s')
 security_handler.setFormatter(security_formatter)
 security_logger.addHandler(security_handler)
 
+# Set up telemetry logging for InsightFlow
+telemetry_logger = logging.getLogger("telemetry_logger")
+telemetry_logger.setLevel(logging.INFO)
+telemetry_handler = RotatingFileHandler("logs/telemetry.jsonl", maxBytes=1000000, backupCount=5)
+telemetry_formatter = logging.Formatter('%(message)s')
+telemetry_handler.setFormatter(telemetry_formatter)
+telemetry_logger.addHandler(telemetry_handler)
+
 # Set up heartbeat logging
 heartbeat_logger = logging.getLogger("heartbeat_logger")
 heartbeat_logger.setLevel(logging.INFO)
@@ -80,6 +88,14 @@ rejected_signatures = 0
 replay_attempts = 0
 last_valid_signature_timestamps = {}  # {plugin_id: timestamp}
 last_nonce = None  # Track the last nonce used
+
+# Telemetry counters for InsightFlow
+telemetry_counters = {
+    "event_ingestion": 0,
+    "accepted_count": 0,
+    "rejected_count": 0,
+    "decision_latencies": []
+}
 
 # In-memory storage for sync summary (in production, use a database)
 sync_summary = {

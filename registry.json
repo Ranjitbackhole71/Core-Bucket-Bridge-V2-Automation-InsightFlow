@@ -29,6 +29,12 @@
       "description": "Automation module for heartbeat and monitoring",
       "required_fields": ["module", "timestamp", "status"],
       "optional_fields": ["metrics"]
+    },
+    "iot_sensor": {
+      "schema_version": "1.0.0",
+      "description": "IoT sensor telemetry module",
+      "required_fields": ["device_id", "timestamp", "data"],
+      "optional_fields": ["location", "unit"]
     }
   },
   "schema_definitions": {
