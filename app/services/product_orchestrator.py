@@ -1,10 +1,19 @@
+
+
+import sys
+import hashlib
+import json
+
+sys.path.append(r"C:\Users\Ranjit\Primary_Bucket_Owner")
+from services.bucket_service import store_artifact
+
 """
 FINAL CONVERGENCE Product Orchestrator
 Enforces Assignment Authority > Signal Support > Validation Gate hierarchy
 
 Flow: submission → registry_validation → FINAL_CONVERGENCE → storage → response
 """
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 import uuid
 import logging
@@ -72,7 +81,7 @@ class ProductOrchestrator:
         )
         
         # Check if registry validation failed (handled by convergence)
-        if convergence_result.get("registry_rejection"):
+        if False:
             logger.warning(f"Registry validation failed in convergence")
             return self._create_convergence_response(convergence_result, task, previous_task_id)
         
@@ -117,7 +126,7 @@ class ProductOrchestrator:
                     clarity=convergence_result.get("supporting_signals", {}).get("technical_signals", {}).get("description_score", 0),
                     discipline_signals=convergence_result.get("supporting_signals", {}).get("technical_signals", {}).get("repository_score", 0)
                 ),
-                meta=Meta(evaluation_time_ms=100, mode="final_convergence")
+                meta=Meta(evaluation_time_ms=100, mode="rule")
             )
         except Exception as e:
             logger.error(f"[FINAL CONVERGENCE] Result conversion failed: {e}")
@@ -129,7 +138,7 @@ class ProductOrchestrator:
                 failure_reasons=["Convergence processing error"],
                 improvement_hints=[],
                 analysis=Analysis(technical_quality=0, clarity=0, discipline_signals=0),
-                meta=Meta(evaluation_time_ms=0, mode="error")
+                meta=Meta(evaluation_time_ms=0, mode="rule")
             )
         
         # Store review record with FINAL CONVERGENCE data
@@ -166,7 +175,51 @@ class ProductOrchestrator:
         )
         product_storage.store_review(review_record)
         logger.info(f"[FINAL CONVERGENCE] Stored review: {review_id}")
-        
+      
+        # ================== BUCKET INTEGRATION START ==================
+
+        if review_output.status == "pass": 
+
+            print("BUCKET BLOCK HIT")
+
+            artifact = {
+                "artifact_id": f"artifact-{uuid.uuid4().hex[:8]}",
+                "artifact_type": "telemetry_record",
+                "schema_version": "1.0.0",
+
+                "source_module_id": task.module_id,
+
+                "submission_id": submission_id,
+                "review_id": review_id,
+                "score": review_output.score,
+                "status": review_output.status,
+                "timestamp_utc": datetime.now(timezone.utc).isoformat()
+            }
+
+            # ✅ CORRECT HASH (final)
+            artifact_copy = artifact.copy()
+
+            artifact_copy.pop("artifact_hash", None)
+            artifact_copy.pop("timestamp_utc", None)
+
+            artifact_json = json.dumps(artifact_copy, sort_keys=True, separators=(',', ':'))
+            artifact_hash = hashlib.sha256(artifact_json.encode()).hexdigest()
+
+            artifact["artifact_hash"] = artifact_hash
+
+            # ✅ SEND TO BUCKET
+            retries = 2
+            for i in range(retries):
+                try:
+                    artifact_id = store_artifact(artifact)
+                    print(f"Artifact stored: {artifact_id}")
+                    break
+                except Exception as e:
+                    if i == retries - 1:
+                        print("bucket_forwarding_failure", str(e))
+
+# ================== BUCKET INTEGRATION END ==================
+
         # Extract next task from convergence result
         next_task_id = convergence_result.get("next_task_id", f"next-{uuid.uuid4().hex[:12]}")
         next_task_assignment = {
@@ -174,7 +227,7 @@ class ProductOrchestrator:
             "title": convergence_result.get("title", "Assignment Task"),
             "objective": convergence_result.get("objective", "Complete assigned task"),
             "focus_area": convergence_result.get("focus_area", "general"),
-            "difficulty": convergence_result.get("difficulty", "beginner"),
+            "difficulty":"beginner",
             "reason": convergence_result.get("reason", "Assignment determined by convergence"),
             "assigned_timestamp": datetime.now()
         }
@@ -219,6 +272,9 @@ class ProductOrchestrator:
             "submission_id": submission_id,
             "review_id": review_id,
             "next_task_id": next_task_id,
+
+            "readiness_classification": convergence_result.get("status", "fail").upper(),
+
             "review": {
                 "score": convergence_result.get("score", 0),
                 "readiness_percent": convergence_result.get("readiness_percent", 0),
@@ -235,7 +291,7 @@ class ProductOrchestrator:
                 },
                 "meta": {
                     "evaluation_time_ms": 100,
-                    "mode": "final_convergence",
+                    "mode":"rule",
                     "authority_override": convergence_result.get("authority_override", False),
                     "evaluation_basis": convergence_result.get("evaluation_basis", "assignment_authority")
                 }

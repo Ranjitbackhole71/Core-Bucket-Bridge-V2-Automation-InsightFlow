@@ -1,0 +1,194 @@
+2026-04-04 15:57:55,606 - product_orchestrator - ERROR - process_submission:132 - [FINAL CONVERGENCE] Result conversion failed: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='final_convergence', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-04 15:57:55,607 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='error', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 141, in process_submission
+    meta=Meta(evaluation_time_ms=0, mode="error")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='error', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-04 16:03:39,516 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 1 validation error for NextTaskRecord
+difficulty
+  String should match pattern '^(beginner|intermediate|advanced)$' [type=string_pattern_mismatch, input_value='foundational', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 221, in process_submission
+    next_task_record = NextTaskRecord(
+                       ^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for NextTaskRecord
+difficulty
+  String should match pattern '^(beginner|intermediate|advanced)$' [type=string_pattern_mismatch, input_value='foundational', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-06 18:12:03,152 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 2 validation errors:
+  {'type': 'string_pattern_mismatch', 'loc': ('response', 'review', 'meta', 'mode'), 'msg': "String should match pattern '^(rule|ml|hybrid)$'", 'input': 'convergence', 'ctx': {'pattern': '^(rule|ml|hybrid)$'}}
+  {'type': 'missing', 'loc': ('response', 'readiness_classification'), 'msg': 'Field required', 'input': {'submission_id': 'sub-20260406181203', 'review_id': 'rev-c21baeb5af43', 'next_task_id': 'next-20260406181203', 'review': {'score': 0, 'readiness_percent': 0, 'status': 'fail', 'failure_reasons': ['repository_not_found', 'missing_features_count: 1', 'low_feature_match_ratio', 'insufficient_implementation_scope'], 'improvement_hints': ['Provide valid GitHub repository with implementation', 'Implement 1 missing features', 'Increase feature delivery ratio - implement more requirements', 'Improve implementation to match requirements more closely', 'Expand implementation scope to meet complexity requirements'], 'evaluation_summary': 'Assignment Authority Evaluation: fail (Score: 0)', 'missing_features': ['integration'], 'expected_vs_delivered': {'expected_count': 1, 'delivered_count': 0, 'missing_count': 1, 'delivery_ratio': 0.0, 'completion_percentage': 0.0, 'gap_analysis': {'critical_gaps': [], 'major_gaps': [], 'minor_gaps': ['integration']}}, 'analysis': {'technical_quality': 0, 'clarity': 0, 'discipline_signals': 0}, 'meta': {'evaluation_time_ms': 100, 'mode': 'convergence', 'authority_override': True, 'evaluation_basis': 'assignment_authority'}}, 'next_task': {'task_id': 'next-20260406181203', 'task_type': 'correction', 'title': 'Implementation Missing Correction Task', 'objective': 'Score 0 requires correction of implementation_missing', 'focus_area': 'implementation_missing', 'difficulty': 'foundational', 'reason': 'Score 0 requires correction of implementation_missing'}, 'registry_validation': {'status': 'VALID', 'module_id': 'task-review-agent', 'schema_version': 'v1.0'}, 'convergence_metadata': {'orchestrator': 'final_convergence', 'hierarchy_enforced': True, 'assignment_authority': 'PRIMARY', 'signal_evaluation': 'SUPPORTING', 'validation_layer': 'FINAL_WRAPPER', 'convergence_timestamp': '2026-04-06T18:12:03.147355', 'authority_hierarchy': {'PRIMARY': 'assignment_authority', 'SUPPORTING': 'signal_collector', 'FINAL_GATE': 'validation_gate'}, 'signal_authority_level': 'SUPPORTING_ONLY', 'no_parallel_paths': True}, 'validation_metadata': {'validated_by': 'shraddha_validation_layer', 'validation_level': 'FINAL_AUTHORITATIVE', 'validated_at': '2026-04-06T18:12:03.147355', 'source_system': 'assignment_authority', 'contract_compliance': 'ENFORCED', 'business_logic_validation': 'APPLIED', 'quality_assurance': 'COMPLETE'}, 'hierarchy_enforced': True, 'authority_chain': 'Assignment > Signals > Validation'}}
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 2 validation errors:
+  {'type': 'string_pattern_mismatch', 'loc': ('response', 'review', 'meta', 'mode'), 'msg': "String should match pattern '^(rule|ml|hybrid)$'", 'input': 'convergence', 'ctx': {'pattern': '^(rule|ml|hybrid)$'}}
+  {'type': 'missing', 'loc': ('response', 'readiness_classification'), 'msg': 'Field required', 'input': {'submission_id': 'sub-20260406181203', 'review_id': 'rev-c21baeb5af43', 'next_task_id': 'next-20260406181203', 'review': {'score': 0, 'readiness_percent': 0, 'status': 'fail', 'failure_reasons': ['repository_not_found', 'missing_features_count: 1', 'low_feature_match_ratio', 'insufficient_implementation_scope'], 'improvement_hints': ['Provide valid GitHub repository with implementation', 'Implement 1 missing features', 'Increase feature delivery ratio - implement more requirements', 'Improve implementation to match requirements more closely', 'Expand implementation scope to meet complexity requirements'], 'evaluation_summary': 'Assignment Authority Evaluation: fail (Score: 0)', 'missing_features': ['integration'], 'expected_vs_delivered': {'expected_count': 1, 'delivered_count': 0, 'missing_count': 1, 'delivery_ratio': 0.0, 'completion_percentage': 0.0, 'gap_analysis': {'critical_gaps': [], 'major_gaps': [], 'minor_gaps': ['integration']}}, 'analysis': {'technical_quality': 0, 'clarity': 0, 'discipline_signals': 0}, 'meta': {'evaluation_time_ms': 100, 'mode': 'convergence', 'authority_override': True, 'evaluation_basis': 'assignment_authority'}}, 'next_task': {'task_id': 'next-20260406181203', 'task_type': 'correction', 'title': 'Implementation Missing Correction Task', 'objective': 'Score 0 requires correction of implementation_missing', 'focus_area': 'implementation_missing', 'difficulty': 'foundational', 'reason': 'Score 0 requires correction of implementation_missing'}, 'registry_validation': {'status': 'VALID', 'module_id': 'task-review-agent', 'schema_version': 'v1.0'}, 'convergence_metadata': {'orchestrator': 'final_convergence', 'hierarchy_enforced': True, 'assignment_authority': 'PRIMARY', 'signal_evaluation': 'SUPPORTING', 'validation_layer': 'FINAL_WRAPPER', 'convergence_timestamp': '2026-04-06T18:12:03.147355', 'authority_hierarchy': {'PRIMARY': 'assignment_authority', 'SUPPORTING': 'signal_collector', 'FINAL_GATE': 'validation_gate'}, 'signal_authority_level': 'SUPPORTING_ONLY', 'no_parallel_paths': True}, 'validation_metadata': {'validated_by': 'shraddha_validation_layer', 'validation_level': 'FINAL_AUTHORITATIVE', 'validated_at': '2026-04-06T18:12:03.147355', 'source_system': 'assignment_authority', 'contract_compliance': 'ENFORCED', 'business_logic_validation': 'APPLIED', 'quality_assurance': 'COMPLETE'}, 'hierarchy_enforced': True, 'authority_chain': 'Assignment > Signals > Validation'}}
+
+2026-04-06 19:05:40,059 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 74, in process_submission
+    convergence_result = final_convergence.process_with_convergence(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\final_convergence.py", line 97, in process_with_convergence
+    supporting_signals = signal_collector.collect_supporting_signals(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\signal_collector.py", line 94, in collect_supporting_signals
+    "implementation_files": repo_signals.get('structure', {}).get('total_files', 0),
+                            ^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'

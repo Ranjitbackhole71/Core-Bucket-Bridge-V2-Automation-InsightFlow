@@ -1,17 +1,15 @@
-from fastapi import APIRouter, Depends
-from ..models.schemas import Task, ReviewOutput, NextTask
+from fastapi import APIRouter
+from ..models.schemas import Task
 from ..models.orchestration import OrchestrationResult
-from ..services.review_orchestrator import ReviewOrchestrator
-from ..core.dependencies import get_review_orchestrator
+from app.services.product_orchestrator import ProductOrchestrator
 
 router = APIRouter()
 
+
 @router.post("/process", response_model=OrchestrationResult)
-async def process_task_submission(
-    task: Task,
-    orchestrator: ReviewOrchestrator = Depends(get_review_orchestrator)
-):
+async def process_task_submission(task: Task):
     """
     Main entry point for the autonomous review process.
     """
+    orchestrator = ProductOrchestrator()
     return orchestrator.process_submission(task)

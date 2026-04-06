@@ -50,7 +50,7 @@ class SignalCollector:
         IMPORTANT: This method DOES NOT determine final scores or classifications.
         It only provides technical signals for Assignment Authority to consider.
         
-        Returns:
+        Returns:nt
             Supporting signals dictionary (NOT evaluation result)
         """
         logger.info(f"[SIGNAL COLLECTOR] Collecting supporting signals for: {task_title[:50]}...")
@@ -62,8 +62,17 @@ class SignalCollector:
         
         # Step 2: Analyze Repository (if available)
         repo_signals = self.repository_analyzer.analyze(repository_url) if repository_url else {}
-        repo_available = bool(repo_signals and not repo_signals.get('error') and 
-                             repo_signals.get('structure', {}).get('total_files', 0) > 0)
+
+        # FIX: handle None safely
+        if repo_signals is None:
+            logger.warning("[SIGNAL COLLECTOR] repo_signals is None — analyzer failed")
+            repo_signals = {}
+
+        repo_available = bool(
+            repo_signals and
+            not repo_signals.get('error') and
+            repo_signals.get('structure', {}).get('total_files', 0) > 0
+        )
         logger.info(f"[SIGNAL COLLECTOR] Repository available: {repo_available}")
         
         # Step 3: Match Requirements to Implementation

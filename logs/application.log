@@ -1,0 +1,816 @@
+2026-04-02 19:38:51,512 - task_review_system - INFO - submit_task:14 - Received task submission from 'string'. Demo: False
+2026-04-02 19:38:51,512 - task_review_system - INFO - submit_task:33 - Task stored successfully. ID: 6761fde1-0d4e-453d-aaa2-356ac6b115a3
+2026-04-02 19:42:59,152 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Bridge Bucket Integration
+2026-04-02 19:42:59,154 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 1 features from requirements.
+2026-04-02 19:42:59,154 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-02 19:42:59,156 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-02 19:42:59,157 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-02 19:42:59,157 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 20.0
+2026-04-02 19:42:59,158 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=20, Status=fail
+2026-04-02 19:42:59,158 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-02 19:42:59,158 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 13:00:23,572 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Complete Core Bridge Bucket Integration
+2026-04-04 13:00:23,574 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 1 features from requirements.
+2026-04-04 13:00:23,873 - repository_analyzer - WARNING - _get:112 - requests failed (404 Client Error: Not Found for url: https://api.github.com/repos/example/repo), trying curl.exe fallback
+2026-04-04 13:00:24,302 - repository_analyzer - WARNING - _get:112 - requests failed (404 Client Error: Not Found for url: https://api.github.com/repos/example/repo/git/trees/main?recursive=1), trying curl.exe fallback
+2026-04-04 13:00:24,356 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 13:00:24,356 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 13:00:24,356 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 13:00:24,357 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 20.2
+2026-04-04 13:00:24,357 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=20, Status=fail
+2026-04-04 13:00:24,358 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 13:00:24,358 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 13:44:37,199 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Integration Test
+2026-04-04 13:44:37,205 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 2 features from requirements.
+2026-04-04 13:44:37,206 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 13:44:37,206 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 13:44:37,207 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 13:44:37,209 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 20.7
+2026-04-04 13:44:37,209 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=20, Status=fail
+2026-04-04 13:44:37,210 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 13:44:37,211 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 13:44:40,722 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Integration Test
+2026-04-04 13:44:40,725 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 2 features from requirements.
+2026-04-04 13:44:40,725 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 13:44:40,726 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 13:44:40,727 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 13:44:40,728 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 20.7
+2026-04-04 13:44:40,728 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=20, Status=fail
+2026-04-04 13:44:40,729 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 13:44:40,729 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 14:35:35,093 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Integration Test
+2026-04-04 14:35:35,095 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 2 features from requirements.
+2026-04-04 14:35:35,096 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 14:35:35,096 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 14:35:35,096 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 14:35:35,097 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 20.7
+2026-04-04 14:35:35,097 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=20, Status=fail
+2026-04-04 14:35:35,097 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 14:35:35,098 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 14:53:48,102 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: string
+2026-04-04 14:53:48,103 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 0 features from requirements.
+2026-04-04 14:53:48,104 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 14:53:48,104 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 1.0
+2026-04-04 14:53:48,105 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 14:53:48,105 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 3.5
+2026-04-04 14:53:48,106 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=3, Status=fail
+2026-04-04 14:53:48,106 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 14:53:48,106 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 15:12:30,282 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: string
+2026-04-04 15:12:30,284 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 0 features from requirements.
+2026-04-04 15:12:30,284 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 15:12:30,285 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 1.0
+2026-04-04 15:12:30,285 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 15:12:30,286 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 3.5
+2026-04-04 15:12:30,286 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=3, Status=fail
+2026-04-04 15:12:30,287 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 15:12:30,287 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 15:28:13,432 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Core Bridge Bucket Integration Working
+2026-04-04 15:28:13,434 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 1 features from requirements.
+2026-04-04 15:28:13,434 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 15:28:13,434 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 15:28:13,435 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 15:28:13,435 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 22.6
+2026-04-04 15:28:13,435 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=22, Status=fail
+2026-04-04 15:28:13,436 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 15:28:13,436 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 15:48:01,942 - evaluation_engine - INFO - evaluate:42 - Starting requirement-matching evaluation for: Core Bridge Bucket Integration Working
+2026-04-04 15:48:01,944 - evaluation_engine - INFO - evaluate:46 - Step 1: Extracted 1 features from requirements.
+2026-04-04 15:48:01,945 - evaluation_engine - INFO - evaluate:51 - Step 2: Repo Analysis Complete - Architecture Layers: 0
+2026-04-04 15:48:01,945 - evaluation_engine - INFO - evaluate:55 - Step 3: Requirement Match Ratio: 0.0
+2026-04-04 15:48:01,945 - evaluation_engine - WARNING - evaluate:76 - Repo unavailable or empty — falling back to title+description scoring.
+2026-04-04 15:48:01,946 - evaluation_engine - INFO - evaluate:126 - Evaluation Complete - Final Score: 22.6
+2026-04-04 15:48:01,946 - orchestrator - INFO - process_submission:133 - Review Logic Result: Score=22, Status=fail
+2026-04-04 15:48:01,946 - orchestrator - INFO - process_submission:147 - Readiness Classification: FAIL
+2026-04-04 15:48:01,946 - orchestrator - INFO - process_submission:152 - Next Task Generated: Title='Core Requirement Implementation', Difficulty='easy'
+2026-04-04 15:57:55,591 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Core Bridge Bucket Integration Working...
+2026-04-04 15:57:55,592 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Core Bridge Bucket Integration Working
+2026-04-04 15:57:55,592 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-04 15:57:55,593 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Core Bridge Bucket Integration Working...
+2026-04-04 15:57:55,593 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-04 15:57:55,594 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-04 15:57:55,594 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 15:57:55,594 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 15:57:55,595 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-04 15:57:55,595 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 15:57:55,595 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 15:57:55,595 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-04 15:57:55,596 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-04 15:57:55,596 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 15:57:55,596 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 15:57:55,596 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-04 15:57:55,596 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-04 15:57:55,597 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-04 15:57:55,597 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: Core Bridge Bucket Integration Working...
+2026-04-04 15:57:55,597 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-04 15:57:55,599 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 1 expected features
+2026-04-04 15:57:55,600 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-04 15:57:55,600 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 0.0
+2026-04-04 15:57:55,601 - signal_collector - INFO - collect_supporting_signals:129 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 1
+2026-04-04 15:57:55,601 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-04 15:57:55,601 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: Core Bridge Bucket Integration Working...
+2026-04-04 15:57:55,601 - assignment_authority - INFO - _calculate_assignment_score:125 - [ASSIGNMENT AUTHORITY] Delivery gap penalty: 50 (ratio: 0.00)
+2026-04-04 15:57:55,602 - assignment_authority - INFO - _calculate_assignment_score:138 - [ASSIGNMENT AUTHORITY] Missing features penalty: Critical=0, Major=0, Minor=1
+2026-04-04 15:57:55,602 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 0
+2026-04-04 15:57:55,602 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-04 15:57:55,602 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: fail (score: 0)
+2026-04-04 15:57:55,602 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-04 15:57:55,602 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-04 15:57:55,603 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-04 15:57:55,603 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: fail
+2026-04-04 15:57:55,603 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-04 15:57:55,603 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260404155755
+2026-04-04 15:57:55,606 - product_orchestrator - ERROR - process_submission:132 - [FINAL CONVERGENCE] Result conversion failed: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='final_convergence', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-04 15:57:55,607 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='error', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 141, in process_submission
+    meta=Meta(evaluation_time_ms=0, mode="error")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Meta
+mode
+  String should match pattern '^(rule|ml|hybrid)$' [type=string_pattern_mismatch, input_value='error', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-04 16:03:39,505 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Core Bridge Bucket Integration Working...
+2026-04-04 16:03:39,506 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Core Bridge Bucket Integration Working
+2026-04-04 16:03:39,506 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-04 16:03:39,506 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Core Bridge Bucket Integration Working...
+2026-04-04 16:03:39,507 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-04 16:03:39,507 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-04 16:03:39,507 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 16:03:39,507 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 16:03:39,507 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-04 16:03:39,507 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 16:03:39,508 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 16:03:39,508 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-04 16:03:39,508 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-04 16:03:39,508 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-04 16:03:39,509 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-04 16:03:39,509 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-04 16:03:39,509 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-04 16:03:39,509 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-04 16:03:39,510 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: Core Bridge Bucket Integration Working...
+2026-04-04 16:03:39,510 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-04 16:03:39,512 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 1 expected features
+2026-04-04 16:03:39,512 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-04 16:03:39,512 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 0.0
+2026-04-04 16:03:39,513 - signal_collector - INFO - collect_supporting_signals:129 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 1
+2026-04-04 16:03:39,513 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-04 16:03:39,513 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: Core Bridge Bucket Integration Working...
+2026-04-04 16:03:39,513 - assignment_authority - INFO - _calculate_assignment_score:125 - [ASSIGNMENT AUTHORITY] Delivery gap penalty: 50 (ratio: 0.00)
+2026-04-04 16:03:39,514 - assignment_authority - INFO - _calculate_assignment_score:138 - [ASSIGNMENT AUTHORITY] Missing features penalty: Critical=0, Major=0, Minor=1
+2026-04-04 16:03:39,514 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 0
+2026-04-04 16:03:39,514 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-04 16:03:39,514 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: fail (score: 0)
+2026-04-04 16:03:39,514 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-04 16:03:39,515 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-04 16:03:39,515 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-04 16:03:39,515 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: fail
+2026-04-04 16:03:39,515 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-04 16:03:39,515 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260404160339
+2026-04-04 16:03:39,515 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-4fd071ca203a
+2026-04-04 16:03:39,516 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 1 validation error for NextTaskRecord
+difficulty
+  String should match pattern '^(beginner|intermediate|advanced)$' [type=string_pattern_mismatch, input_value='foundational', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 221, in process_submission
+    next_task_record = NextTaskRecord(
+                       ^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\pydantic\main.py", line 214, in __init__
+    validated_self = self.__pydantic_validator__.validate_python(data, self_instance=self)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for NextTaskRecord
+difficulty
+  String should match pattern '^(beginner|intermediate|advanced)$' [type=string_pattern_mismatch, input_value='foundational', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.10/v/string_pattern_mismatch
+2026-04-06 18:12:03,137 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Core Bridge Bucket Integration Working...
+2026-04-06 18:12:03,138 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Core Bridge Bucket Integration Working
+2026-04-06 18:12:03,139 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 18:12:03,139 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Core Bridge Bucket Integration Working...
+2026-04-06 18:12:03,139 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 18:12:03,139 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 18:12:03,139 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:12:03,139 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:12:03,140 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 18:12:03,140 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:12:03,140 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:12:03,140 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 18:12:03,140 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 18:12:03,141 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:12:03,141 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:12:03,141 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 18:12:03,141 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 18:12:03,141 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 18:12:03,142 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: Core Bridge Bucket Integration Working...
+2026-04-06 18:12:03,142 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 18:12:03,144 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 1 expected features
+2026-04-06 18:12:03,145 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 18:12:03,145 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 0.0
+2026-04-06 18:12:03,145 - signal_collector - INFO - collect_supporting_signals:129 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 1
+2026-04-06 18:12:03,145 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 18:12:03,146 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: Core Bridge Bucket Integration Working...
+2026-04-06 18:12:03,146 - assignment_authority - INFO - _calculate_assignment_score:125 - [ASSIGNMENT AUTHORITY] Delivery gap penalty: 50 (ratio: 0.00)
+2026-04-06 18:12:03,146 - assignment_authority - INFO - _calculate_assignment_score:138 - [ASSIGNMENT AUTHORITY] Missing features penalty: Critical=0, Major=0, Minor=1
+2026-04-06 18:12:03,146 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 0
+2026-04-06 18:12:03,146 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 18:12:03,147 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: fail (score: 0)
+2026-04-06 18:12:03,147 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 18:12:03,147 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 18:12:03,147 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-06 18:12:03,148 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: fail
+2026-04-06 18:12:03,148 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-06 18:12:03,148 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406181203
+2026-04-06 18:12:03,149 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-c21baeb5af43
+2026-04-06 18:12:03,152 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 2 validation errors:
+  {'type': 'string_pattern_mismatch', 'loc': ('response', 'review', 'meta', 'mode'), 'msg': "String should match pattern '^(rule|ml|hybrid)$'", 'input': 'convergence', 'ctx': {'pattern': '^(rule|ml|hybrid)$'}}
+  {'type': 'missing', 'loc': ('response', 'readiness_classification'), 'msg': 'Field required', 'input': {'submission_id': 'sub-20260406181203', 'review_id': 'rev-c21baeb5af43', 'next_task_id': 'next-20260406181203', 'review': {'score': 0, 'readiness_percent': 0, 'status': 'fail', 'failure_reasons': ['repository_not_found', 'missing_features_count: 1', 'low_feature_match_ratio', 'insufficient_implementation_scope'], 'improvement_hints': ['Provide valid GitHub repository with implementation', 'Implement 1 missing features', 'Increase feature delivery ratio - implement more requirements', 'Improve implementation to match requirements more closely', 'Expand implementation scope to meet complexity requirements'], 'evaluation_summary': 'Assignment Authority Evaluation: fail (Score: 0)', 'missing_features': ['integration'], 'expected_vs_delivered': {'expected_count': 1, 'delivered_count': 0, 'missing_count': 1, 'delivery_ratio': 0.0, 'completion_percentage': 0.0, 'gap_analysis': {'critical_gaps': [], 'major_gaps': [], 'minor_gaps': ['integration']}}, 'analysis': {'technical_quality': 0, 'clarity': 0, 'discipline_signals': 0}, 'meta': {'evaluation_time_ms': 100, 'mode': 'convergence', 'authority_override': True, 'evaluation_basis': 'assignment_authority'}}, 'next_task': {'task_id': 'next-20260406181203', 'task_type': 'correction', 'title': 'Implementation Missing Correction Task', 'objective': 'Score 0 requires correction of implementation_missing', 'focus_area': 'implementation_missing', 'difficulty': 'foundational', 'reason': 'Score 0 requires correction of implementation_missing'}, 'registry_validation': {'status': 'VALID', 'module_id': 'task-review-agent', 'schema_version': 'v1.0'}, 'convergence_metadata': {'orchestrator': 'final_convergence', 'hierarchy_enforced': True, 'assignment_authority': 'PRIMARY', 'signal_evaluation': 'SUPPORTING', 'validation_layer': 'FINAL_WRAPPER', 'convergence_timestamp': '2026-04-06T18:12:03.147355', 'authority_hierarchy': {'PRIMARY': 'assignment_authority', 'SUPPORTING': 'signal_collector', 'FINAL_GATE': 'validation_gate'}, 'signal_authority_level': 'SUPPORTING_ONLY', 'no_parallel_paths': True}, 'validation_metadata': {'validated_by': 'shraddha_validation_layer', 'validation_level': 'FINAL_AUTHORITATIVE', 'validated_at': '2026-04-06T18:12:03.147355', 'source_system': 'assignment_authority', 'contract_compliance': 'ENFORCED', 'business_logic_validation': 'APPLIED', 'quality_assurance': 'COMPLETE'}, 'hierarchy_enforced': True, 'authority_chain': 'Assignment > Signals > Validation'}}
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 327, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 176, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 2 validation errors:
+  {'type': 'string_pattern_mismatch', 'loc': ('response', 'review', 'meta', 'mode'), 'msg': "String should match pattern '^(rule|ml|hybrid)$'", 'input': 'convergence', 'ctx': {'pattern': '^(rule|ml|hybrid)$'}}
+  {'type': 'missing', 'loc': ('response', 'readiness_classification'), 'msg': 'Field required', 'input': {'submission_id': 'sub-20260406181203', 'review_id': 'rev-c21baeb5af43', 'next_task_id': 'next-20260406181203', 'review': {'score': 0, 'readiness_percent': 0, 'status': 'fail', 'failure_reasons': ['repository_not_found', 'missing_features_count: 1', 'low_feature_match_ratio', 'insufficient_implementation_scope'], 'improvement_hints': ['Provide valid GitHub repository with implementation', 'Implement 1 missing features', 'Increase feature delivery ratio - implement more requirements', 'Improve implementation to match requirements more closely', 'Expand implementation scope to meet complexity requirements'], 'evaluation_summary': 'Assignment Authority Evaluation: fail (Score: 0)', 'missing_features': ['integration'], 'expected_vs_delivered': {'expected_count': 1, 'delivered_count': 0, 'missing_count': 1, 'delivery_ratio': 0.0, 'completion_percentage': 0.0, 'gap_analysis': {'critical_gaps': [], 'major_gaps': [], 'minor_gaps': ['integration']}}, 'analysis': {'technical_quality': 0, 'clarity': 0, 'discipline_signals': 0}, 'meta': {'evaluation_time_ms': 100, 'mode': 'convergence', 'authority_override': True, 'evaluation_basis': 'assignment_authority'}}, 'next_task': {'task_id': 'next-20260406181203', 'task_type': 'correction', 'title': 'Implementation Missing Correction Task', 'objective': 'Score 0 requires correction of implementation_missing', 'focus_area': 'implementation_missing', 'difficulty': 'foundational', 'reason': 'Score 0 requires correction of implementation_missing'}, 'registry_validation': {'status': 'VALID', 'module_id': 'task-review-agent', 'schema_version': 'v1.0'}, 'convergence_metadata': {'orchestrator': 'final_convergence', 'hierarchy_enforced': True, 'assignment_authority': 'PRIMARY', 'signal_evaluation': 'SUPPORTING', 'validation_layer': 'FINAL_WRAPPER', 'convergence_timestamp': '2026-04-06T18:12:03.147355', 'authority_hierarchy': {'PRIMARY': 'assignment_authority', 'SUPPORTING': 'signal_collector', 'FINAL_GATE': 'validation_gate'}, 'signal_authority_level': 'SUPPORTING_ONLY', 'no_parallel_paths': True}, 'validation_metadata': {'validated_by': 'shraddha_validation_layer', 'validation_level': 'FINAL_AUTHORITATIVE', 'validated_at': '2026-04-06T18:12:03.147355', 'source_system': 'assignment_authority', 'contract_compliance': 'ENFORCED', 'business_logic_validation': 'APPLIED', 'quality_assurance': 'COMPLETE'}, 'hierarchy_enforced': True, 'authority_chain': 'Assignment > Signals > Validation'}}
+
+2026-04-06 18:35:37,748 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Core Bridge Bucket Integration Working...
+2026-04-06 18:35:37,749 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Core Bridge Bucket Integration Working
+2026-04-06 18:35:37,749 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 18:35:37,749 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Core Bridge Bucket Integration Working...
+2026-04-06 18:35:37,750 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 18:35:37,751 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 18:35:37,751 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:35:37,751 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:35:37,751 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 18:35:37,751 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:35:37,752 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 18:35:37,754 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 18:35:37,754 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 18:35:37,754 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: Core Bridge Bucket Integration Working...
+2026-04-06 18:35:37,754 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 18:35:37,756 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 1 expected features
+2026-04-06 18:35:37,757 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 18:35:37,757 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 0.0
+2026-04-06 18:35:37,757 - signal_collector - INFO - collect_supporting_signals:129 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 1
+2026-04-06 18:35:37,757 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 18:35:37,758 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: Core Bridge Bucket Integration Working...
+2026-04-06 18:35:37,758 - assignment_authority - INFO - _calculate_assignment_score:125 - [ASSIGNMENT AUTHORITY] Delivery gap penalty: 50 (ratio: 0.00)
+2026-04-06 18:35:37,758 - assignment_authority - INFO - _calculate_assignment_score:138 - [ASSIGNMENT AUTHORITY] Missing features penalty: Critical=0, Major=0, Minor=1
+2026-04-06 18:35:37,758 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 0
+2026-04-06 18:35:37,759 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 18:35:37,759 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: fail (score: 0)
+2026-04-06 18:35:37,759 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 18:35:37,759 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 18:35:37,759 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-06 18:35:37,759 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: fail
+2026-04-06 18:35:37,759 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-06 18:35:37,760 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406183537
+2026-04-06 18:35:37,760 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-96b2eb0688d3
+2026-04-06 18:43:53,048 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Core Bridge Bucket Integration Working...
+2026-04-06 18:43:53,049 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Core Bridge Bucket Integration Working
+2026-04-06 18:43:53,049 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 18:43:53,049 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Core Bridge Bucket Integration Working...
+2026-04-06 18:43:53,049 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 18:43:53,050 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 18:43:53,050 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:43:53,050 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:43:53,050 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 18:43:53,051 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:43:53,051 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:43:53,051 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 18:43:53,051 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 18:43:53,051 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 18:43:53,052 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 18:43:53,052 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 18:43:53,052 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 18:43:53,052 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 18:43:53,052 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: Core Bridge Bucket Integration Working...
+2026-04-06 18:43:53,052 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 18:43:53,056 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 1 expected features
+2026-04-06 18:43:53,057 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 18:43:53,057 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 0.0
+2026-04-06 18:43:53,058 - signal_collector - INFO - collect_supporting_signals:129 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 1
+2026-04-06 18:43:53,058 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 18:43:53,058 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: Core Bridge Bucket Integration Working...
+2026-04-06 18:43:53,058 - assignment_authority - INFO - _calculate_assignment_score:125 - [ASSIGNMENT AUTHORITY] Delivery gap penalty: 50 (ratio: 0.00)
+2026-04-06 18:43:53,058 - assignment_authority - INFO - _calculate_assignment_score:138 - [ASSIGNMENT AUTHORITY] Missing features penalty: Critical=0, Major=0, Minor=1
+2026-04-06 18:43:53,059 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 0
+2026-04-06 18:43:53,059 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 18:43:53,059 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: fail (score: 0)
+2026-04-06 18:43:53,059 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 18:43:53,059 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 18:43:53,059 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-06 18:43:53,060 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: fail
+2026-04-06 18:43:53,060 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-06 18:43:53,060 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406184353
+2026-04-06 18:43:53,060 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-a6cfcd82f5af
+2026-04-06 19:05:40,048 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: string...
+2026-04-06 19:05:40,049 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: string
+2026-04-06 19:05:40,050 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 19:05:40,050 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: string...
+2026-04-06 19:05:40,051 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 19:05:40,051 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 19:05:40,051 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:05:40,051 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:05:40,051 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:05:40,052 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 19:05:40,054 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 19:05:40,054 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 19:05:40,054 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: string...
+2026-04-06 19:05:40,054 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 19:05:40,057 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 19:05:40,058 - signal_collector - INFO - collect_supporting_signals:67 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 19:05:40,059 - signal_collector - INFO - collect_supporting_signals:71 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 19:05:40,059 - task_review_system - CRITICAL - global_exception_handler:73 - FATAL: 'NoneType' object has no attribute 'get'
+Traceback (most recent call last):
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\errors.py", line 165, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 93, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\cors.py", line 144, in simple_response
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\middleware\exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 715, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 735, in app
+    await route.handle(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 288, in handle
+    await self.app(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 76, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\starlette\routing.py", line 73, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 301, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\AppData\Roaming\Python\Python312\site-packages\fastapi\routing.py", line 212, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\api\orchestration.py", line 15, in process_task_submission
+    return orchestrator.process_submission(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\product_orchestrator.py", line 74, in process_submission
+    convergence_result = final_convergence.process_with_convergence(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\final_convergence.py", line 97, in process_with_convergence
+    supporting_signals = signal_collector.collect_supporting_signals(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Ranjit\Task-Review-Agent-Full-Product-Evolution\app\services\signal_collector.py", line 94, in collect_supporting_signals
+    "implementation_files": repo_signals.get('structure', {}).get('total_files', 0),
+                            ^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+2026-04-06 19:31:05,298 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: string...
+2026-04-06 19:31:05,299 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: string
+2026-04-06 19:31:05,299 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 19:31:05,299 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: string...
+2026-04-06 19:31:05,299 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 19:31:05,300 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 19:31:05,300 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:31:05,300 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:31:05,300 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 19:31:05,300 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 19:31:05,301 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 19:31:05,302 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 19:31:05,302 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 19:31:05,302 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: string...
+2026-04-06 19:31:05,302 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 19:31:05,304 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 19:31:05,304 - signal_collector - WARNING - collect_supporting_signals:68 - [SIGNAL COLLECTOR] repo_signals is None — analyzer failed
+2026-04-06 19:31:05,305 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 19:31:05,306 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 19:31:05,307 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 19:31:05,307 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 19:31:05,307 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: string...
+2026-04-06 19:31:05,307 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 19:31:05,307 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 19:31:05,307 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 19:31:05,307 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 19:31:05,307 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 19:31:05,308 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 19:31:05,308 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 19:31:05,308 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 19:31:05,308 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406193105
+2026-04-06 19:31:05,309 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-57b578330e97
+2026-04-06 20:01:41,789 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:01:41,790 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:01:41,790 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:01:41,790 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:01:41,790 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:01:41,791 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:01:41,791 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:01:41,791 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:01:41,791 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:01:41,791 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:01:41,792 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:01:41,793 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:01:41,793 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:01:41,794 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:01:41,794 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:01:41,794 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:01:41,794 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:01:41,795 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:01:41,795 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:01:41,795 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:01:41,798 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:01:41,798 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:01:41,798 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:01:41,799 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:01:41,799 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:01:41,800 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:01:41,800 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:01:41,800 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:01:41,800 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:01:41,801 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:01:41,801 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:01:41,801 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:01:41,801 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:01:41,802 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:01:41,802 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406200141
+2026-04-06 20:01:41,802 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-b977cd162cea
+2026-04-06 20:05:06,771 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:05:06,772 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:05:06,772 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:05:06,772 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:05:06,772 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:05:06,773 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:05:06,775 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:05:06,775 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:05:06,775 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:05:06,775 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:05:06,775 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:05:06,776 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:05:06,776 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:05:06,776 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:05:06,776 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:05:06,777 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:05:06,777 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:05:06,777 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:05:06,777 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:05:06,777 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:05:06,777 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:05:06,778 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:05:06,778 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:05:06,778 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:05:06,779 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:05:06,779 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:05:06,779 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406200506
+2026-04-06 20:05:06,779 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-9512e71810db
+2026-04-06 20:06:28,645 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:06:28,646 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:06:28,646 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:06:28,646 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:06:28,646 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:06:28,647 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:06:28,647 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:06:28,647 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:06:28,647 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:06:28,647 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:06:28,648 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:06:28,648 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:06:28,648 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:06:28,648 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:06:28,649 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:06:28,649 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:06:28,649 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:06:28,649 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:06:28,649 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:06:28,650 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:06:28,652 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:06:28,652 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:06:28,652 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:06:28,653 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:06:28,653 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:06:28,653 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:06:28,653 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:06:28,653 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:06:28,653 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:06:28,655 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:06:28,655 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:06:28,655 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:06:28,655 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:06:28,656 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:06:28,656 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406200628
+2026-04-06 20:06:28,656 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-2eb21ddd9e7d
+2026-04-06 20:09:24,133 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:09:24,133 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:09:24,134 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:09:24,134 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:09:24,134 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:09:24,135 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:09:24,135 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:09:24,136 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:09:24,136 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:09:24,136 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:09:24,137 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:09:24,138 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:09:24,138 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:09:24,138 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:09:24,140 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:09:24,141 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:09:24,141 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:09:24,141 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:09:24,142 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:09:24,142 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:09:24,142 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:09:24,142 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:09:24,143 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:09:24,143 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:09:24,143 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:09:24,143 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:09:24,143 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:09:24,143 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:09:24,144 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406200924
+2026-04-06 20:09:24,145 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-66f0ea50c35e
+2026-04-06 20:18:07,833 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:18:07,834 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:18:07,835 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:18:07,835 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:18:07,835 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:18:07,835 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:18:07,835 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:18:07,836 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:18:07,836 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:18:07,836 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:18:07,838 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:18:07,839 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:18:07,840 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:18:07,840 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:18:07,840 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:18:07,840 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:18:07,840 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:18:07,840 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:18:07,841 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:18:07,841 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:18:07,841 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:18:07,841 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:18:07,841 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:18:07,842 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:18:07,842 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:18:07,842 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406201807
+2026-04-06 20:18:07,843 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-720f48ab441d
+2026-04-06 20:24:38,427 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:24:38,428 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:24:38,428 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:24:38,428 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:24:38,428 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:24:38,429 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:24:38,429 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:24:38,429 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:24:38,429 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:24:38,430 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:24:38,431 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:24:38,431 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:24:38,431 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:24:38,433 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:24:38,433 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:24:38,433 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:24:38,434 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:24:38,434 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:24:38,434 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:24:38,434 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:24:38,434 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:24:38,435 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:24:38,435 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:24:38,435 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:24:38,435 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:24:38,435 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:24:38,435 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:24:38,435 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406202438
+2026-04-06 20:24:38,435 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-6fedd2d440fe
+2026-04-06 20:29:21,866 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:29:21,867 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:29:21,867 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:29:21,867 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:29:21,868 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:29:21,868 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:29:21,869 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:29:21,869 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:29:21,869 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:29:21,869 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:29:21,869 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:29:21,870 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:29:21,870 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:29:21,871 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:29:21,872 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:29:21,872 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:29:21,872 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:29:21,872 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:29:21,873 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:29:21,873 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:29:21,873 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:29:21,873 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:29:21,873 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:29:21,873 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:29:21,873 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:29:21,875 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:29:21,875 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:29:21,875 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406202921
+2026-04-06 20:29:21,876 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-c30fd23fd33c
+2026-04-06 20:35:21,757 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: AI Resume Screening System...
+2026-04-06 20:35:21,758 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: AI Resume Screening System
+2026-04-06 20:35:21,758 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-06 20:35:21,759 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: AI Resume Screening System...
+2026-04-06 20:35:21,759 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-06 20:35:21,759 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-06 20:35:21,759 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:35:21,759 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:35:21,759 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-06 20:35:21,760 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:35:21,760 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:35:21,760 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-06 20:35:21,760 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: v1.0)
+2026-04-06 20:35:21,761 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-06 20:35:21,761 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-06 20:35:21,761 - registry_validator - INFO - validate_schema_version:233 - Schema version validation passed: v1.0
+2026-04-06 20:35:21,761 - registry_validator - INFO - validate_complete:267 - Complete validation passed for module: task-review-agent
+2026-04-06 20:35:21,762 - final_convergence - INFO - process_with_convergence:96 - [FINAL CONVERGENCE] Step 2: Signal Collection (Supporting Data)
+2026-04-06 20:35:21,762 - signal_collector - INFO - collect_supporting_signals:56 - [SIGNAL COLLECTOR] Collecting supporting signals for: AI Resume Screening System...
+2026-04-06 20:35:21,762 - signal_collector - WARNING - collect_supporting_signals:57 - [SIGNAL COLLECTOR] NO SCORING AUTHORITY - Signals only
+2026-04-06 20:35:21,763 - signal_collector - INFO - collect_supporting_signals:61 - [SIGNAL COLLECTOR] Extracted 0 expected features
+2026-04-06 20:35:21,763 - signal_collector - INFO - collect_supporting_signals:76 - [SIGNAL COLLECTOR] Repository available: False
+2026-04-06 20:35:21,765 - signal_collector - INFO - collect_supporting_signals:80 - [SIGNAL COLLECTOR] Feature match ratio: 1.0
+2026-04-06 20:35:21,765 - signal_collector - INFO - collect_supporting_signals:138 - [SIGNAL COLLECTOR] Signal collection complete - Repository: False, Features: 0
+2026-04-06 20:35:21,765 - final_convergence - INFO - process_with_convergence:105 - [FINAL CONVERGENCE] Step 3: Assignment Authority Evaluation (PRIMARY)
+2026-04-06 20:35:21,765 - assignment_authority - INFO - evaluate_assignment_readiness:44 - [ASSIGNMENT AUTHORITY] PRIMARY EVALUATION: AI Resume Screening System...
+2026-04-06 20:35:21,765 - assignment_authority - INFO - _calculate_assignment_score:167 - [ASSIGNMENT AUTHORITY] Final assignment score: 60
+2026-04-06 20:35:21,765 - assignment_authority - INFO - _determine_next_assignment:223 - [ASSIGNMENT AUTHORITY] Determining next assignment based on evidence...
+2026-04-06 20:35:21,765 - assignment_authority - INFO - evaluate_assignment_readiness:98 - [ASSIGNMENT AUTHORITY] PRIMARY RESULT: borderline (score: 60)
+2026-04-06 20:35:21,766 - final_convergence - INFO - process_with_convergence:113 - [FINAL CONVERGENCE] Step 4: Validation Gate (Final Wrapper)
+2026-04-06 20:35:21,766 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: assignment_authority
+2026-04-06 20:35:21,766 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: borderline
+2026-04-06 20:35:21,766 - final_convergence - INFO - process_with_convergence:127 - [FINAL CONVERGENCE] Convergence complete - Final Status: borderline
+2026-04-06 20:35:21,766 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
+2026-04-06 20:35:21,767 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406203521
+2026-04-06 20:35:21,767 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-c6d6ab221f52
