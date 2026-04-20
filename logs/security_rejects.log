@@ -1,0 +1,33 @@
+2026-02-07 10:50:39,542 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 10:52:29,013 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 10:57:19,426 - Invalid token for role module: Signature has expired
+2026-02-07 10:58:00,418 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:33:22,518 - Invalid token for role module: Signature has expired
+2026-02-07 11:35:42,018 - Invalid token for role module: Signature has expired
+2026-02-07 11:38:23,871 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:39:02,772 - Signature verification failed: 
+2026-02-07 11:39:02,773 - Invalid signature for /core/update
+2026-02-07 11:39:19,321 - Replay attack detected with nonce: 0def9447-8ea1-4c8d-a41d-440394d45ca3
+2026-02-07 11:39:19,321 - Replay attack detected
+2026-02-07 11:39:42,189 - Signature verification failed: 
+2026-02-07 11:39:42,193 - Invalid signature for /core/update
+2026-02-07 11:39:46,805 - Replay attack detected with nonce: 735c0f7d-d545-488a-aef0-4fccff4ad2ee
+2026-02-07 11:39:46,805 - Replay attack detected
+2026-02-07 11:39:49,403 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:41:38,111 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:42:02,698 - Replay attack detected with nonce: test_nonce
+2026-02-07 11:42:02,698 - Replay attack detected in heartbeat
+2026-02-07 11:44:30,265 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:45:00,363 - Signature verification failed: 
+2026-02-07 11:45:00,369 - Invalid signature for /core/update
+2026-02-07 11:45:04,996 - Replay attack detected with nonce: f0a49ac8-d163-49ce-834b-c94439096ce9
+2026-02-07 11:45:04,996 - Replay attack detected
+2026-02-07 11:45:07,523 - Invalid token for role module: The specified alg value is not allowed
+2026-02-07 11:47:08,283 - Signature verification failed: 
+2026-02-07 11:47:08,283 - Invalid signature for /core/update
+2026-02-07 11:47:13,006 - Replay attack detected with nonce: df88b675-b83b-419e-bdaa-04182507e645
+2026-02-07 11:47:13,006 - Replay attack detected
+2026-02-07 11:52:39,387 - Signature verification failed: 
+2026-02-07 11:52:39,389 - Invalid signature for /core/update
+2026-02-07 11:52:44,076 - Replay attack detected with nonce: 51b3b266-ff32-4f0e-ad1d-1ebb5591fe43
+2026-02-07 11:52:44,076 - Replay attack detected
