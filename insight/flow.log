@@ -1,0 +1,53 @@
+{"module": "test", "status": "synced", "timestamp": "2025-11-12T08:34:17.235573Z", "latency_ms": 50}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:05:28.511898Z", "hash": "4acb07bbf4153888cf6912c4df6930ee3a2c80bb83e7950a81ee321d1160ff93", "previous_hash": ""}
+{"module": "test", "status": "synced", "timestamp": "2026-02-07T06:05:28.511898Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "test", "timestamp": "2026-02-07T06:05:28.511898Z", "latency_ms": 50, "status": "success"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:07:20.947724Z", "hash": "0df921ce126ec10a4a52af7de9eeeb29b278a53cfb96f72602db0ea4be5975d8", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:07:20.947724Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:07:20.947724Z", "latency_ms": 50, "status": "success"}
+{"event_type": "signature_rejection", "timestamp": "2026-02-07T06:09:02.773524Z", "error": ""}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:09:17.235930Z", "hash": "10b06cc7678a41a77321152deb2b85da64603de4e2d3d12ed882f34a4868a943", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:09:17.235930Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:09:17.235930Z", "latency_ms": 50, "status": "success"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:09:19.321517Z", "nonce": "0def9447-8ea1-4c8d-a41d-440394d45ca3"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:09:39.503412Z", "hash": "9ed7a1d379a8ecc6ffcf37a255b519d7f65974549000d8761ccb46de770f5102", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:09:39.503412Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:09:39.503412Z", "latency_ms": 50, "status": "success"}
+{"event_type": "signature_rejection", "timestamp": "2026-02-07T06:09:42.189599Z", "error": ""}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:09:44.720503Z", "hash": "d65bd0c220a47c37f4067dd5396f9fe240ed2ef3afd3e1a2791334210b8908b2", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:09:44.720503Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:09:44.720503Z", "latency_ms": 50, "status": "success"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:09:46.805195Z", "nonce": "735c0f7d-d545-488a-aef0-4fccff4ad2ee"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:12:02.698410Z", "nonce": "test_nonce"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:12:59.644341Z", "hash": "b1cf6dec0dbc5c83ce751d504f3695a21ad75c050b142d45cd85a4abbfb6d814", "previous_hash": ""}
+{"event_type": "heartbeat", "module": "test", "timestamp": "2026-02-07T06:12:59.644341Z", "status": "alive", "metrics": {"cpu": 45, "memory": 128}}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:14:57.747209Z", "hash": "2003303b9595d122fa170efe6353c34ac09d4fde047ea11d442817683e337cd1", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:14:57.747209Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:14:57.747209Z", "latency_ms": 50, "status": "success"}
+{"event_type": "signature_rejection", "timestamp": "2026-02-07T06:15:00.369009Z", "error": ""}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:15:02.913327Z", "hash": "90df89517c2d761482715c5e7aee0de1912c87c4a852b23883a2e0919bfdc7a7", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:15:02.913327Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:15:02.913327Z", "latency_ms": 50, "status": "success"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:15:04.996434Z", "nonce": "f0a49ac8-d163-49ce-834b-c94439096ce9"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:16:51.838671Z", "hash": "97f05b63803aaca0e643a5944329f4c0b869948893922b397b2b3922080fbc15", "previous_hash": ""}
+{"event_type": "heartbeat", "module": "automation", "timestamp": "2026-02-07T06:16:51.838671Z", "status": "alive", "metrics": {"cpu": 45, "memory": 128, "uptime": 3600, "jobs_executed": 10}}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:17:05.575936Z", "hash": "f29e9af995e2b9f0ba2f1ee62cc8fe21dd3faa4881bfceb7a09ad94721854d7a", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:17:05.575936Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:17:05.575936Z", "latency_ms": 50, "status": "success"}
+{"event_type": "signature_rejection", "timestamp": "2026-02-07T06:17:08.283250Z", "error": ""}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:17:10.908231Z", "hash": "8d76c78fee12d52c3df284a7c0578c73f298394fcf892902bf915f05b352732d", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:17:10.908231Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:17:10.908231Z", "latency_ms": 50, "status": "success"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:17:13.006396Z", "nonce": "df88b675-b83b-419e-bdaa-04182507e645"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:17:15.595814Z", "hash": "d85f302ff7a8e12cc5c1a8c3c545f2d46149f7fb3aa2f89fcc69fed4ec90fd96", "previous_hash": ""}
+{"event_type": "heartbeat", "module": "automation", "timestamp": "2026-02-07T06:17:15.595814Z", "status": "alive", "metrics": {"cpu": 45, "memory": 128, "uptime": 3600, "jobs_executed": 10}}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:22:36.795401Z", "hash": "0ed5ee4109bc42077bdfede76d7b197d1b3cb9de0b0754a4e9ecc788aaa81b66", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:22:36.795401Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:22:36.795401Z", "latency_ms": 50, "status": "success"}
+{"event_type": "signature_rejection", "timestamp": "2026-02-07T06:22:39.387121Z", "error": ""}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:22:41.965251Z", "hash": "8fb6ec68c740dcbe42546255501c93a4209a6dfed5e72c5591a4977a160b0a7c", "previous_hash": ""}
+{"module": "education", "status": "synced", "timestamp": "2026-02-07T06:22:41.965251Z", "latency_ms": 50}
+{"event_type": "core_update", "module": "education", "timestamp": "2026-02-07T06:22:41.965251Z", "latency_ms": 50, "status": "success"}
+{"event_type": "replay_rejection", "timestamp": "2026-02-07T06:22:44.076357Z", "nonce": "51b3b266-ff32-4f0e-ad1d-1ebb5591fe43"}
+{"event_type": "provenance_chain", "timestamp": "2026-02-07T06:22:46.566198Z", "hash": "db3b2c7436882a5bd5412f47c6ccc4221209a5048cd2baea42947d359b791046", "previous_hash": ""}
+{"event_type": "heartbeat", "module": "automation", "timestamp": "2026-02-07T06:22:46.566198Z", "status": "alive", "metrics": {"cpu": 45, "memory": 128, "uptime": 3600, "jobs_executed": 10}}
