@@ -52,7 +52,7 @@ def test_invalid_token_blocks():
 def test_tampered_token_blocks():
     r = validate_and_forward(_req(token="valid_authority_bridge_key_0000"))
     assert r["status"] == "BLOCKED"
-    assert "Tampered" in r["reason"] or "Invalid" in r["reason"], f"Wrong reason: {r['reason']}"
+    assert "Tampered" in r["reason"], f"Expected Tampered, got: {r['reason']}"
     print("  PASS: tampered token -> BLOCK")
 
 
