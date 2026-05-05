@@ -5,12 +5,12 @@
     "trace_id": "t-conc-same",
     "execution_id": "e-conc-same-idempotent",
     "artifact_id": "artifact-e-conc-same-idempotent",
-    "artifact_hash": "7c618e284882c38c074e6aecd009e55379e1bc948be4a67605fdad67766c5ae9",
+    "artifact_hash": "2268a9e140686226660b0e6e9c7600b81a732c90e457f59efb22ba3e274a5f29",
     "verified_write": true,
     "hash_match": true,
     "schema_valid": true,
-    "execution_duration_ms": 1.0,
-    "result_hash": "a896ddfec0fef98d09f1bbb3da235441ec690cf616e64d9b4e72063dc8b9223f"
+    "execution_duration_ms": 1.01,
+    "result_hash": "8c3a0dbf1f239aa14520ec5e1f93fb2eed0d4b73a6409cdb093303327024646c"
   },
   "core-exec-e2e-001": {
     "status": "FORWARDED",
@@ -18,11 +18,11 @@
     "trace_id": "core-trace-e2e-001",
     "execution_id": "core-exec-e2e-001",
     "artifact_id": "artifact-core-exec-e2e-001",
-    "artifact_hash": "b5fd1e0f8062965c558c995ddeef2379498ccd92acf2c4c7d1533af16ecf647a",
+    "artifact_hash": "6b911183e92dcf07c56a0847ac3ee5892b4d1bd328781820cc9fa09cfcc8b45d",
     "verified_write": true,
     "hash_match": true,
     "schema_valid": true,
     "execution_duration_ms": 1.01,
-    "result_hash": "ae888789bf685b84efbbbb79c94ef3f503ceea79114a57a28555c2cfaf40d360"
+    "result_hash": "a04995fb82fe12ae7d6f5a25b53e6b4873341de5392ee3ba058a79e235c08d68"
   }
 }

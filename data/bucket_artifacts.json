@@ -1,7 +1,7 @@
 [
   {
     "artifact_id": "artifact-core-exec-e2e-001",
-    "timestamp_utc": "2026-05-05T14:17:55+00:00Z",
+    "timestamp_utc": "2026-05-05T15:47:46+00:00Z",
     "schema_version": "1.0.0",
     "source_module_id": "tantra-bridge",
     "artifact_type": "telemetry_record",
@@ -13,7 +13,7 @@
         "input_hash": "4210f55306608ac47e07e0c0ea3b9a947f2a081cdd3b19b05a76df2cb25144f8",
         "execution_id": "core-exec-e2e-001",
         "trace_id": "core-trace-e2e-001",
-        "processed_at": "2026-05-05T14:17:55.456212+00:00",
+        "processed_at": "2026-05-05T15:47:46.563571+00:00",
         "data": {
           "task": "production_validation",
           "source": "tantra-core",
@@ -30,7 +30,7 @@
           "accumulator_mod_10000": 2356
         }
       },
-      "result_hash": "ae888789bf685b84efbbbb79c94ef3f503ceea79114a57a28555c2cfaf40d360",
+      "result_hash": "a04995fb82fe12ae7d6f5a25b53e6b4873341de5392ee3ba058a79e235c08d68",
       "original_payload": {
         "task": "production_validation",
         "source": "tantra-core",
@@ -40,6 +40,6 @@
         }
       }
     },
-    "artifact_hash": "b5fd1e0f8062965c558c995ddeef2379498ccd92acf2c4c7d1533af16ecf647a"
+    "artifact_hash": "6b911183e92dcf07c56a0847ac3ee5892b4d1bd328781820cc9fa09cfcc8b45d"
   }
 ]
