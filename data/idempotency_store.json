@@ -1,0 +1,28 @@
+{
+  "e-conc-same-idempotent": {
+    "status": "FORWARDED",
+    "reason": "authority_valid_executed_verified",
+    "trace_id": "t-conc-same",
+    "execution_id": "e-conc-same-idempotent",
+    "artifact_id": "artifact-e-conc-same-idempotent",
+    "artifact_hash": "7c618e284882c38c074e6aecd009e55379e1bc948be4a67605fdad67766c5ae9",
+    "verified_write": true,
+    "hash_match": true,
+    "schema_valid": true,
+    "execution_duration_ms": 1.0,
+    "result_hash": "a896ddfec0fef98d09f1bbb3da235441ec690cf616e64d9b4e72063dc8b9223f"
+  },
+  "core-exec-e2e-001": {
+    "status": "FORWARDED",
+    "reason": "authority_valid_executed_verified",
+    "trace_id": "core-trace-e2e-001",
+    "execution_id": "core-exec-e2e-001",
+    "artifact_id": "artifact-core-exec-e2e-001",
+    "artifact_hash": "b5fd1e0f8062965c558c995ddeef2379498ccd92acf2c4c7d1533af16ecf647a",
+    "verified_write": true,
+    "hash_match": true,
+    "schema_valid": true,
+    "execution_duration_ms": 1.01,
+    "result_hash": "ae888789bf685b84efbbbb79c94ef3f503ceea79114a57a28555c2cfaf40d360"
+  }
+}

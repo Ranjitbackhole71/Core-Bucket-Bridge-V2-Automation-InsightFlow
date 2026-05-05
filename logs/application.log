@@ -814,3 +814,178 @@ AttributeError: 'NoneType' object has no attribute 'get'
 2026-04-06 20:35:21,766 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 60
 2026-04-06 20:35:21,767 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: sub-20260406203521
 2026-04-06 20:35:21,767 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-c6d6ab221f52
+2026-04-14 00:52:27,757 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Test integration...
+2026-04-14 00:52:27,758 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 00:52:27,758 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 00:52:27,758 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 00:52:27,758 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 00:52:27,759 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: test_module
+2026-04-14 00:52:27,759 - registry_validator - INFO - validate_module_id:140 - Validating module_id: test_module
+2026-04-14 00:52:27,759 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Module ID 'test_module' not found in Blueprint Registry
+2026-04-14 00:52:27,759 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 00:52:27,759 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 00:52:27,760 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 00:52:27,760 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: rejected-20260414005227
+2026-04-14 00:52:27,761 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-9a9334ff1a06
+2026-04-14 00:54:00,549 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Test integration...
+2026-04-14 00:54:00,550 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 00:54:00,550 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 00:54:00,550 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 00:54:00,550 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 00:54:00,551 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: test_module
+2026-04-14 00:54:00,551 - registry_validator - INFO - validate_module_id:140 - Validating module_id: test_module
+2026-04-14 00:54:00,551 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Module ID 'test_module' not found in Blueprint Registry
+2026-04-14 00:54:00,551 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 00:54:00,552 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 00:54:00,552 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 00:54:00,552 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: rejected-20260414005400
+2026-04-14 00:54:00,554 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-9e0926717891
+2026-04-14 01:02:55,754 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Test integration...
+2026-04-14 01:02:55,755 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 01:02:55,756 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 01:02:55,756 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 01:02:55,756 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 01:02:55,756 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: test_module
+2026-04-14 01:02:55,757 - registry_validator - INFO - validate_module_id:140 - Validating module_id: test_module
+2026-04-14 01:02:55,757 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Module ID 'test_module' not found in Blueprint Registry
+2026-04-14 01:02:55,757 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 01:02:55,757 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 01:02:55,757 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 01:02:55,758 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: rejected-20260414010255
+2026-04-14 01:02:55,758 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-56e44dca7eed
+2026-04-14 10:41:08,366 - product_orchestrator - INFO - process_submission:67 - Processing submission for task: Test integration...
+2026-04-14 10:41:08,367 - product_orchestrator - INFO - process_submission:70 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 10:41:08,368 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 10:41:08,368 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 10:41:08,368 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 10:41:08,368 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 10:41:08,369 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:41:08,369 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:41:08,369 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 10:41:08,369 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:41:08,370 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:41:08,370 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 10:41:08,370 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 10:41:08,370 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:41:08,370 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:41:08,371 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 10:41:08,371 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 10:41:08,371 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 10:41:08,371 - product_orchestrator - INFO - process_submission:89 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 10:41:08,372 - product_orchestrator - INFO - process_submission:113 - [FINAL CONVERGENCE] Stored submission: rejected-20260414104108
+2026-04-14 10:41:08,372 - product_orchestrator - INFO - process_submission:177 - [FINAL CONVERGENCE] Stored review: rev-6292d79ecfb4
+2026-04-14 10:48:47,789 - product_orchestrator - INFO - process_submission:68 - Processing submission for task: Test integration...
+2026-04-14 10:48:47,790 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 10:48:47,790 - product_orchestrator - INFO - process_submission:72 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 10:48:47,791 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 10:48:47,791 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:48:47,791 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:48:47,792 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 10:48:47,792 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 10:48:47,792 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:48:47,792 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:48:47,793 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 10:48:47,793 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 10:48:47,793 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 10:48:47,793 - product_orchestrator - INFO - process_submission:90 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 10:48:47,793 - product_orchestrator - INFO - process_submission:114 - [FINAL CONVERGENCE] Stored submission: rejected-20260414104847
+2026-04-14 10:48:47,794 - product_orchestrator - INFO - process_submission:178 - [FINAL CONVERGENCE] Stored review: rev-2af6e50dc911
+2026-04-14 10:52:16,797 - product_orchestrator - INFO - process_submission:68 - Processing submission for task: Test integration...
+2026-04-14 10:52:16,797 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 10:52:16,797 - product_orchestrator - INFO - process_submission:72 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 10:52:16,798 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 10:52:16,798 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 10:52:16,798 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 10:52:16,798 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:52:16,799 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:52:16,799 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 10:52:16,799 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:52:16,799 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:52:16,800 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 10:52:16,800 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 10:52:16,800 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:52:16,800 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:52:16,801 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 10:52:16,801 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 10:52:16,801 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 10:52:16,801 - product_orchestrator - INFO - process_submission:90 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 10:52:16,802 - product_orchestrator - INFO - process_submission:114 - [FINAL CONVERGENCE] Stored submission: rejected-20260414105216
+2026-04-14 10:52:16,802 - product_orchestrator - INFO - process_submission:178 - [FINAL CONVERGENCE] Stored review: rev-f699fd35da07
+2026-04-14 10:56:53,844 - product_orchestrator - INFO - process_submission:68 - Processing submission for task: Test integration...
+2026-04-14 10:56:53,844 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 10:56:53,845 - product_orchestrator - INFO - process_submission:72 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 10:56:53,845 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 10:56:53,845 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 10:56:53,845 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 10:56:53,845 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 10:56:53,846 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 10:56:53,847 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 10:56:53,847 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 10:56:53,847 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 10:56:53,847 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 10:56:53,847 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 10:56:53,848 - product_orchestrator - INFO - process_submission:90 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 10:56:53,848 - product_orchestrator - INFO - process_submission:114 - [FINAL CONVERGENCE] Stored submission: rejected-20260414105653
+2026-04-14 10:56:53,848 - product_orchestrator - INFO - process_submission:178 - [FINAL CONVERGENCE] Stored review: rev-f77a4ed7cdc3
+2026-04-14 10:56:53,850 - services.bucket_store - INFO - append_artifact:41 - Artifact appended: artifact-3a619696
+2026-04-14 10:56:53,851 - services.bucket_service - INFO - store_artifact:37 - Artifact stored successfully: artifact-3a619696
+2026-04-14 11:32:46,192 - product_orchestrator - INFO - process_submission:68 - Processing submission for task: Test integration...
+2026-04-14 11:32:46,193 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 11:32:46,193 - product_orchestrator - INFO - process_submission:72 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 11:32:46,193 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 11:32:46,193 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 11:32:46,193 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 11:32:46,194 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:32:46,194 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:32:46,194 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 11:32:46,194 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:32:46,194 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:32:46,195 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 11:32:46,195 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 11:32:46,195 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:32:46,195 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:32:46,196 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 11:32:46,196 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 11:32:46,196 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 11:32:46,196 - product_orchestrator - INFO - process_submission:90 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 11:32:46,196 - product_orchestrator - INFO - process_submission:114 - [FINAL CONVERGENCE] Stored submission: rejected-20260414113246
+2026-04-14 11:32:46,197 - product_orchestrator - INFO - process_submission:178 - [FINAL CONVERGENCE] Stored review: rev-74057b91dcb0
+2026-04-14 11:32:46,199 - services.bucket_store - INFO - append_artifact:41 - Artifact appended: artifact-a301b337
+2026-04-14 11:32:46,199 - services.bucket_service - INFO - store_artifact:37 - Artifact stored successfully: artifact-a301b337
+2026-04-14 11:34:26,017 - product_orchestrator - INFO - process_submission:68 - Processing submission for task: Test integration...
+2026-04-14 11:34:26,017 - product_orchestrator - INFO - process_submission:71 - [FINAL CONVERGENCE] Processing task: Test integration
+2026-04-14 11:34:26,018 - product_orchestrator - INFO - process_submission:72 - [FINAL CONVERGENCE] Hierarchy: Assignment > Signals > Validation
+2026-04-14 11:34:26,018 - final_convergence - INFO - process_with_convergence:72 - [FINAL CONVERGENCE] Starting convergence processing for: Test integration...
+2026-04-14 11:34:26,018 - final_convergence - INFO - process_with_convergence:75 - [FINAL CONVERGENCE] Step 1: Registry Validation
+2026-04-14 11:34:26,018 - registry_validator - INFO - validate_complete:250 - Performing complete validation for module: task-review-agent
+2026-04-14 11:34:26,018 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:34:26,019 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:34:26,019 - registry_validator - INFO - validate_lifecycle_stage:172 - Validating lifecycle stage for module: task-review-agent
+2026-04-14 11:34:26,019 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:34:26,019 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:34:26,019 - registry_validator - INFO - validate_lifecycle_stage:196 - Lifecycle stage validation passed: LifecycleStage.PRODUCTION
+2026-04-14 11:34:26,020 - registry_validator - INFO - validate_schema_version:213 - Validating schema version for module: task-review-agent (required: 1.0.0)
+2026-04-14 11:34:26,020 - registry_validator - INFO - validate_module_id:140 - Validating module_id: task-review-agent
+2026-04-14 11:34:26,020 - registry_validator - INFO - validate_module_id:155 - Module found: task-review-agent (status: active)
+2026-04-14 11:34:26,020 - final_convergence - WARNING - process_with_convergence:79 - [FINAL CONVERGENCE] Registry validation failed: Schema version mismatch: module 'task-review-agent' has v1.0, required 1.0.0
+2026-04-14 11:34:26,020 - shraddha_validation - INFO - validate_final_output:54 - [SHRADDHA VALIDATION] Final gate validation from source: registry_rejection
+2026-04-14 11:34:26,021 - shraddha_validation - INFO - validate_final_output:80 - [SHRADDHA VALIDATION] Final validation complete - Status: fail
+2026-04-14 11:34:26,021 - product_orchestrator - INFO - process_submission:90 - [FINAL CONVERGENCE] Validation gate passed - Score: 0
+2026-04-14 11:34:26,021 - product_orchestrator - INFO - process_submission:114 - [FINAL CONVERGENCE] Stored submission: rejected-20260414113426
+2026-04-14 11:34:26,021 - product_orchestrator - INFO - process_submission:178 - [FINAL CONVERGENCE] Stored review: rev-ccc35ceae4c6
+2026-04-14 11:34:26,036 - services.bucket_store - INFO - append_artifact:41 - Artifact appended: artifact-e35fe366
+2026-04-14 11:34:26,037 - services.bucket_service - INFO - store_artifact:37 - Artifact stored successfully: artifact-e35fe366
+2026-04-20 00:03:16,812 - services.bucket_store - INFO - append_artifact:41 - Artifact appended: artifact-exec-123
+2026-04-20 00:03:16,812 - services.bucket_service - INFO - store_artifact:37 - Artifact stored successfully: artifact-exec-123
+2026-04-20 00:22:32,790 - services.bucket_store - INFO - append_artifact:41 - Artifact appended: artifact-exec-999
+2026-04-20 00:22:32,791 - services.bucket_service - INFO - store_artifact:37 - Artifact stored successfully: artifact-exec-999

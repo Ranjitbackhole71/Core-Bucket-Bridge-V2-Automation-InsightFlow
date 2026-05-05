@@ -1,319 +1,294 @@
 """
-Bridge Service - Logic-Neutral Gateway
+Bridge — Non-Bypassable Execution Gate (HARDENED)
 
-STRICT CONSTRAINTS:
-- ZERO intelligence (no evaluation, no scoring, no inference)
-- NO ACCEPTED/REJECTED checks
-- NO payload interpretation
-- Authority token REQUIRED
-- Trace IDs REQUIRED and forwarded UNCHANGED
-- Read-back verification REQUIRED
+STRICT FLOW: Core -> Sarathi -> Bridge -> Execution System -> Bucket -> Response
+
+HARDENING:
+- Cryptographic authority validation (Sarathi JWT) BEFORE anything else
+- Bridge signs every inter-service call (HMAC-SHA256)
+- Execution System validates bridge signature
+- Bucket Service validates bridge signature
+- Reject invalid requests immediately
+- Forward to execution system AFTER validation
+- NEVER call Bucket before execution
+- NEVER generate trace_id or execution_id
+- NEVER bypass execution layer
+- Idempotency enforcement (execution_id uniqueness)
+- Trace immutability verification
 """
 import logging
-from typing import Dict, Any
-import hashlib
 import json
+import hashlib
+from typing import Dict, Any, Optional
+from datetime import datetime, timezone
 
-from .retry_handler import retry_handler
+from ..sarathi.authority import sarathi_authority, SarathiValidationError
+from ..sarathi.bridge_signer import bridge_signer
+from ..execution.system import execution_system, ExecutionError
+from .bucket_service import bucket_service, BucketUnauthorizedError
+from .hash_service import compute_artifact_hash, verify_artifact_hash
 
-logger = logging.getLogger("bridge_service")
+logger = logging.getLogger("tantra_bridge")
 
 
-class BridgeService:
-    """
-    Logic-neutral gateway between Core and Bucket.
-    
-    Responsibilities:
-    1. Validate authority_token (presence + basic structure)
-    2. Enforce trace_id + execution_id (presence + immutability)
-    3. Forward payload to Bucket (no inspection)
-    4. Verify write (read-back + hash match + schema check)
-    5. Compute provenance_hash (fetch previous from Bucket, NOT local)
-    
-    NOT Allowed:
-    - Evaluation logic
-    - ACCEPTED/REJECTED checks
-    - Scoring or inference
-    - Payload interpretation
-    - Local state storage
-    """
-    
-    def __init__(self, bucket_client=None):
-        """
-        Initialize Bridge service.
-        
-        Args:
-            bucket_client: Existing bucket client (injected, NOT created)
-        """
-        self.bucket_client = bucket_client
-    
-    def validate_and_forward(
+class BridgeNonBypassError(Exception):
+    """Raised when bridge invariant is violated."""
+    pass
+
+
+IDEMPOTENCY_FILE = None
+
+def _get_idempotency_file() -> str:
+    global IDEMPOTENCY_FILE
+    if IDEMPOTENCY_FILE is None:
+        data_dir = __import__("os").path.join(
+            __import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__file__))),
+            "data"
+        )
+        __import__("os").makedirs(data_dir, exist_ok=True)
+        IDEMPOTENCY_FILE = __import__("os").path.join(data_dir, "idempotency_store.json")
+    return IDEMPOTENCY_FILE
+
+
+class TantraBridge:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __init__(self):
+        if not hasattr(self, "_initialized"):
+            self._initialized = True
+
+    def process(
         self,
-        execution_id: str,
         trace_id: str,
+        execution_id: str,
         authority_token: str,
-        payload: Dict[str, Any]
-    ) -> Dict[str, Any]:
-        """
-        Validate request and forward to Bucket.
-        
-        Flow:
-        1. Validate authority_token (REQUIRED)
-        2. Validate trace IDs (REQUIRED, NOT generated)
-        3. Fetch previous_hash from Bucket (NOT local)
-        4. Compute artifact_hash + provenance_hash
-        5. Forward to Bucket with retry
-        6. Read-back verification
-        7. Return status
-        
-        Args:
-            execution_id: Execution identifier (REQUIRED, NOT generated)
-            trace_id: Trace identifier (REQUIRED, NOT modified)
-            authority_token: Authority token (REQUIRED, validated)
-            payload: Artifact payload (NOT inspected)
-            
-        Returns:
-            {"status": "FORWARDED|BLOCKED", "reason": "...", "trace_id": "..."}
-        """
-        # === PHASE 1: AUTHORITY ENFORCEMENT ===
-        
-        # Check authority_token presence
-        if not authority_token:
-            logger.error(f"[BLOCKED] missing authority_token trace_id={trace_id}")
-            return {
-                "status": "BLOCKED",
-                "reason": "missing_authority_token",
-                "trace_id": trace_id
-            }
-        
-        # Validate token structure (basic check)
-        if not self._validate_authority_token(authority_token):
-            logger.error(f"[BLOCKED] invalid authority_token trace_id={trace_id}")
-            return {
-                "status": "BLOCKED",
-                "reason": "invalid_authority_token",
-                "trace_id": trace_id
-            }
-        
-        logger.info(f"[AUTHORITY] token validated trace_id={trace_id}")
-        
-        # === PHASE 2: TRACE ENFORCEMENT ===
-        
-        # Check trace IDs presence
-        if not execution_id or not trace_id:
-            logger.error(f"[BLOCKED] missing trace identifiers execution_id={execution_id} trace_id={trace_id}")
-            return {
-                "status": "BLOCKED",
-                "reason": "missing_trace_ids",
-                "trace_id": trace_id
-            }
-        
-        # Trace IDs forwarded UNCHANGED (NOT generated, NOT modified)
-        logger.info(f"[TRACE] execution_id={execution_id} trace_id={trace_id}")
-        
-        # === PHASE 3: PROVENANCE (Fetch from Bucket, NOT Local) ===
-        
-        # Fetch previous_hash from Bucket
-        previous_hash = self._fetch_previous_hash_from_bucket()
-        logger.info(f"[PROVENANCE] previous_hash={previous_hash[:16]}...")
-        
-        # Build artifact (schema-compliant)
-        artifact = self._build_artifact(
-            execution_id=execution_id,
-            trace_id=trace_id,
-            payload=payload,
-            previous_hash=previous_hash
-        )
-        
-        # === PHASE 4: FORWARD TO BUCKET ===
-        
-        if not self.bucket_client:
-            logger.error(f"[BLOCKED] no bucket client configured trace_id={trace_id}")
-            return {
-                "status": "BLOCKED",
-                "reason": "no_bucket_client",
-                "trace_id": trace_id
-            }
-        
-        # Forward with retry logic
-        def forward_operation():
-            """Write to Bucket with read-back verification."""
-            # Write
-            artifact_id = self.bucket_client.store_artifact(artifact)
-            logger.info(f"[WRITE] artifact_id={artifact_id}")
-            
-            # Read-back
-            stored_artifact = self.bucket_client.get_artifact(artifact_id)
-            
-            # Verify existence
-            if not stored_artifact:
-                raise Exception(f"Artifact {artifact_id} not found after write")
-            
-            # Verify hash match
-            if stored_artifact.get("artifact_hash") != artifact["artifact_hash"]:
-                raise Exception(
-                    f"Hash mismatch: expected {artifact['artifact_hash']}, "
-                    f"got {stored_artifact.get('artifact_hash')}"
-                )
-            
-            # Verify schema (required fields)
-            required_fields = [
-                "artifact_id", "timestamp_utc", "schema_version",
-                "source_module_id", "artifact_type", "parent_hash",
-                "payload", "artifact_hash"
-            ]
-            for field in required_fields:
-                if field not in stored_artifact:
-                    raise Exception(f"Missing required field: {field}")
-            
-            # Log verified_write
-            logger.info(f"[VERIFIED_WRITE] artifact_id={artifact_id} hash_match=True schema_valid=True")
-            
-            return {
-                "artifact_id": artifact_id,
-                "status": "FORWARDED",
-                "verified_write": True
-            }
-        
-        retry_result = retry_handler.execute_with_retry(
-            operation=forward_operation,
-            operation_name="bucket_forward"
-        )
-        
-        # === PHASE 5: RETURN RESULT ===
-        
-        if retry_result.get("success"):
-            logger.info(f"[FORWARDED] trace_id={trace_id} artifact_id={retry_result['artifact_id']}")
-            return {
-                "status": "FORWARDED",
-                "reason": "artifact_stored_verified",
-                "trace_id": trace_id,
-                "artifact_id": retry_result["artifact_id"],
-                "verified_write": True
-            }
-        else:
-            logger.error(f"[FAILURE] trace_id={trace_id} error={retry_result.get('error')}")
-            return {
-                "status": "BLOCKED",
-                "reason": f"bucket_write_failed: {retry_result.get('error')}",
-                "trace_id": trace_id
-            }
-    
-    def _validate_authority_token(self, token: str) -> bool:
-        """
-        Validate authority token structure.
-        
-        Basic validation: non-empty string, minimum length.
-        NO cryptographic verification (handled by Core).
-        
-        Args:
-            token: Authority token string
-            
-        Returns:
-            True if valid structure, False otherwise
-        """
-        if not isinstance(token, str):
-            return False
-        if len(token) < 10:  # Minimum length check
-            return False
-        return True
-    
-    def _fetch_previous_hash_from_bucket(self) -> str:
-        """
-        Fetch previous artifact hash from Bucket.
-        
-        NO local state. NO memory cache.
-        Always fetches from Bucket.
-        
-        Returns:
-            Previous artifact hash, or "GENESIS" if none exists
-        """
-        try:
-            latest = self.bucket_client.get_latest_artifact()
-            if latest:
-                return latest.get("artifact_hash", "GENESIS")
-        except Exception as e:
-            logger.warning(f"[PROVENANCE] failed to fetch previous hash: {e}")
-        
-        return "GENESIS"
-    
-    def _build_artifact(
-        self,
-        execution_id: str,
-        trace_id: str,
         payload: Dict[str, Any],
-        previous_hash: str
     ) -> Dict[str, Any]:
-        """
-        Build artifact with schema compliance.
-        
-        Schema:
-        {
-            "artifact_id": "<uuid>",
-            "timestamp_utc": "<iso8601>",
-            "schema_version": "1.0.0",
-            "source_module_id": "<module>",
-            "artifact_type": "telemetry_record",
-            "parent_hash": "<previous_hash>",
-            "payload": {...},
-            "artifact_hash": "<sha256>"
+        return self._validate_authority(
+            trace_id, execution_id, authority_token, payload
+        )
+
+    def _validate_authority(
+        self,
+        trace_id: str,
+        execution_id: str,
+        authority_token: str,
+        payload: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        if not trace_id or trace_id.strip() == "":
+            return self._blocked_response("Missing trace_id", "MISSING_TRACE_ID", trace_id, execution_id)
+        if not execution_id or execution_id.strip() == "":
+            return self._blocked_response("Missing execution_id", "MISSING_EXECUTION_ID", trace_id, execution_id)
+
+        try:
+            sarathi_payload = sarathi_authority.validate_token(authority_token)
+        except SarathiValidationError as e:
+            logger.error(f"[BRIDGE] authority rejected code={e.code} reason={e.reason}")
+            return self._blocked_response(e.reason, e.code, trace_id, execution_id)
+        except Exception as e:
+            logger.error(f"[BRIDGE] authority validation crash: {e}")
+            return self._blocked_response(
+                "authority_validation_error", "AUTH_CRASH", trace_id, execution_id
+            )
+
+        return self._execute(
+            trace_id, execution_id, sarathi_payload, payload
+        )
+
+    def _execute(
+        self,
+        trace_id: str,
+        execution_id: str,
+        sarathi_payload: Dict[str, Any],
+        payload: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        idempotent_result = self._check_idempotency(trace_id, execution_id)
+        if idempotent_result is not None:
+            logger.info(f"[BRIDGE] idempotent hit execution_id={execution_id}")
+            return idempotent_result
+
+        bridge_auth = bridge_signer.sign({
+            "trace_id": trace_id,
+            "execution_id": execution_id,
+        })
+
+        try:
+            exec_result = execution_system.execute(
+                trace_id=trace_id,
+                execution_id=execution_id,
+                payload=payload,
+                bridge_authorization=bridge_auth,
+            )
+        except ExecutionError as e:
+            logger.error(f"[BRIDGE] execution failed code={e.code} reason={e.reason}")
+            return self._blocked_response(e.reason, e.code, trace_id, execution_id)
+        except Exception as e:
+            logger.error(f"[BRIDGE] execution crash: {e}")
+            return self._blocked_response(
+                "execution_system_error", "EXEC_CRASH", trace_id, execution_id
+            )
+
+        return self._persist_to_bucket(
+            trace_id, execution_id, exec_result, payload
+        )
+
+    def _persist_to_bucket(
+        self,
+        trace_id: str,
+        execution_id: str,
+        exec_result: Dict[str, Any],
+        payload: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        try:
+            parent_hash = bucket_service.get_latest_hash()
+            if parent_hash is None:
+                parent_hash = "GENESIS"
+
+            timestamp = datetime.now(timezone.utc).replace(microsecond=0).isoformat() + "Z"
+
+            artifact = {
+                "artifact_id": f"artifact-{execution_id}",
+                "timestamp_utc": timestamp,
+                "schema_version": "1.0.0",
+                "source_module_id": "tantra-bridge",
+                "artifact_type": "telemetry_record",
+                "parent_hash": parent_hash,
+                "execution_id": execution_id,
+                "trace_id": trace_id,
+                "payload": {
+                    "execution_result": exec_result["result"],
+                    "result_hash": exec_result["result_hash"],
+                    "original_payload": payload,
+                },
+            }
+
+            artifact_hash = compute_artifact_hash(artifact)
+            artifact["artifact_hash"] = artifact_hash
+
+            bucket_bridge_auth = bridge_signer.sign({
+                "trace_id": trace_id,
+                "execution_id": execution_id,
+            })
+
+            stored = bucket_service.write_artifact(
+                artifact,
+                bridge_authorization=bucket_bridge_auth,
+            )
+
+            verification = bucket_service.verify_write(
+                artifact_id=stored["artifact_id"],
+                expected_hash=artifact_hash,
+            )
+
+            if verification["verified_write"]:
+                logger.info(
+                    f"[BRIDGE] verified_write=true artifact_id={stored['artifact_id']} "
+                    f"trace_id={trace_id} execution_id={execution_id}"
+                )
+
+                result = self._forwarded_response(
+                    trace_id=trace_id,
+                    execution_id=execution_id,
+                    artifact_id=stored["artifact_id"],
+                    artifact_hash=artifact_hash,
+                    verification=verification,
+                    exec_result=exec_result,
+                )
+
+                self._store_idempotency(execution_id, result)
+
+                return result
+            else:
+                return self._blocked_response(
+                    verification["reason"], "BUCKET_VERIFY_FAILED",
+                    trace_id, execution_id
+                )
+
+        except BucketUnauthorizedError as e:
+            logger.error(f"[BRIDGE] bucket unauthorized: {e}")
+            return self._blocked_response(str(e), "BUCKET_UNAUTHORIZED", trace_id, execution_id)
+        except ValueError as e:
+            logger.error(f"[BRIDGE] bucket write failed: {e}")
+            return self._blocked_response(str(e), "BUCKET_WRITE_FAILED", trace_id, execution_id)
+        except Exception as e:
+            logger.error(f"[BRIDGE] bucket crash: {e}")
+            return self._blocked_response(
+                "bucket_service_error", "BUCKET_CRASH", trace_id, execution_id
+            )
+
+    def _check_idempotency(self, trace_id: str, execution_id: str) -> Optional[Dict[str, Any]]:
+        idemp_file = _get_idempotency_file()
+        if not __import__("os").path.exists(idemp_file):
+            return None
+
+        try:
+            with open(idemp_file, "r", encoding="utf-8") as f:
+                store = json.load(f)
+            entry = store.get(execution_id)
+            if entry is not None:
+                return entry
+        except Exception:
+            pass
+        return None
+
+    def _store_idempotency(self, execution_id: str, result: Dict[str, Any]):
+        idemp_file = _get_idempotency_file()
+        store = {}
+        if __import__("os").path.exists(idemp_file):
+            try:
+                with open(idemp_file, "r", encoding="utf-8") as f:
+                    store = json.load(f)
+            except Exception:
+                store = {}
+
+        store[execution_id] = result
+
+        with open(idemp_file, "w", encoding="utf-8") as f:
+            json.dump(store, f, indent=2)
+
+    def _forwarded_response(
+        self,
+        trace_id: str,
+        execution_id: str,
+        artifact_id: str,
+        artifact_hash: str,
+        verification: Dict[str, Any],
+        exec_result: Dict[str, Any],
+    ) -> Dict[str, Any]:
+        return {
+            "status": "FORWARDED",
+            "reason": "authority_valid_executed_verified",
+            "trace_id": trace_id,
+            "execution_id": execution_id,
+            "artifact_id": artifact_id,
+            "artifact_hash": artifact_hash,
+            "verified_write": verification["verified_write"],
+            "hash_match": verification.get("hash_match", False),
+            "schema_valid": verification.get("schema_valid", False),
+            "execution_duration_ms": exec_result.get("execution_duration_ms"),
+            "result_hash": exec_result.get("result_hash"),
         }
-        
-        Args:
-            execution_id: Execution identifier (forwarded unchanged)
-            trace_id: Trace identifier (forwarded unchanged)
-            payload: Payload (NOT inspected)
-            previous_hash: Previous artifact hash from Bucket
-            
-        Returns:
-            Complete artifact dict
-        """
-        from datetime import datetime, timezone
-        import uuid
-        
-        # Build artifact WITHOUT hash fields first
-        artifact = {
-            "artifact_id": str(uuid.uuid4()),
-            "timestamp_utc": datetime.now(timezone.utc).isoformat(),
-            "schema_version": "1.0.0",
-            "source_module_id": "evaluation",
-            "artifact_type": "telemetry_record",
-            "parent_hash": previous_hash,
-            "execution_id": execution_id,  # Forwarded UNCHANGED
-            "trace_id": trace_id,          # Forwarded UNCHANGED
-            "payload": payload             # NOT inspected
+
+    def _blocked_response(
+        self,
+        reason: str,
+        code: str,
+        trace_id: Optional[str],
+        execution_id: Optional[str],
+    ) -> Dict[str, Any]:
+        return {
+            "status": "BLOCKED",
+            "reason": reason,
+            "code": code,
+            "trace_id": str(trace_id) if trace_id is not None else "",
+            "execution_id": str(execution_id) if execution_id is not None else "",
+            "verified_write": False,
         }
-        
-        # Compute artifact_hash (deterministic)
-        artifact_hash = self._compute_artifact_hash(artifact)
-        artifact["artifact_hash"] = artifact_hash
-        
-        return artifact
-    
-    def _compute_artifact_hash(self, artifact: Dict[str, Any]) -> str:
-        """
-        Compute deterministic SHA256 hash of artifact.
-        
-        Excludes self-referential fields (artifact_hash).
-        Uses canonical JSON (sorted keys, no whitespace).
-        
-        Args:
-            artifact: Artifact dict (without artifact_hash field)
-            
-        Returns:
-            SHA256 hex digest
-        """
-        # Remove hash field to avoid circular dependency
-        artifact_copy = artifact.copy()
-        artifact_copy.pop("artifact_hash", None)
-        
-        # Canonical JSON (sorted keys, no whitespace)
-        canonical_json = json.dumps(artifact_copy, sort_keys=True, separators=(',', ':'))
-        
-        # SHA256 hash
-        return hashlib.sha256(canonical_json.encode('utf-8')).hexdigest()
 
 
-# Singleton instance
-# NOTE: bucket_client must be injected before use
-bridge_service = BridgeService()
+tantra_bridge = TantraBridge()
