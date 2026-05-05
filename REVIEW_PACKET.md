@@ -28,14 +28,13 @@ Bridge returns response to Core
 
 ---
 
-## 2. 4-FILE EXECUTION FLOW
+## 2. 3-FILE EXECUTION FLOW
 
 | File | Role | Protection |
 |------|------|------------|
-| `app/sarathi/authority.py` | Cryptographic JWT validation | RSA-2048, expiry, issuer, audience, replay |
+| `app/sarathi/authority.py` | Cryptographic JWT validation | RSA-2048, expiry, issuer, replay |
 | `app/services/bridge_integration.py` | Non-bypassable execution gate | Signs all inter-service calls |
 | `app/execution/system.py` | Real execution pipeline | Requires bridge signature |
-| `app/services/bucket_service.py` | Memory layer | Requires bridge signature, hash chain |
 
 ```
 Core → Sarathi (JWT verify) → Bridge (sign auth) → Execution (verify+run) → Bucket (verify+write) → Response
